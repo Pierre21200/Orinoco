@@ -18,5 +18,13 @@
     "mongoose-unique-validator": "^2.0.2",
     "uuid": "^3.3.2"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pierre21200/Orinoco.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Pierre21200/Orinoco/issues"
+  },
+  "homepage": "https://github.com/Pierre21200/Orinoco#readme"
 }
