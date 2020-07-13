@@ -1,106 +1,38 @@
-<!doctype html>
-<html lang="fr"> 
-<head>
-	<meta charset="utf-8">
-	<meta name="robots" content="index,follow">   
-    <meta name="description" content=""> 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Orinoco's Bear : Product Page</title>  
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/b3ea1b0c27.js" crossorigin="anonymous"></script>
-</head>
+<html lang="fr">
 
-<header>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.html">Orinoco's Bear</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,follow">   
+      <meta name="description" content=""> 
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+      <title>Orinico's Bear</title>  
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+      <script src="https://kit.fontawesome.com/b3ea1b0c27.js" crossorigin="anonymous"></script>
   
-        <div class="collapse navbar-collapse" id="navbarsExample03">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#"> <i class="fas fa-shopping-cart"></i> <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
-            </li>
-          </ul>
-          
-        </div>
-      </nav>
-</header>
-
-
+</head>
 <body>
-<main class="mt-5 pt-4">
-    <div class="container dark-grey-text mt-5">
+    <header class="row" style="padding: 20px; background-color: rgb(242, 232, 240);"> <!-- Modifier police titre et couleur panier-->
+    <div class="col-11" style="justify-content: center; text-align: center;">
+      <h1>Orinoco's Bear</h1>
+    </div>
+    <div class="col-1" style="margin-top: 10px;">
+      <i class="fas fa-shopping-cart fa-2x"></i>
+    </div>
+    </header>
 
-      <!--Grid row-->
-      <div class="row wow fadeIn">
+    <div id="pageProduct"></div>
 
-        <!--Grid column-->
-        <div class="col-md-6 mb-4">
-
-          <img src="teddy1.jpg" class="img-fluid" alt="">
-
-        </div>
-        <!--Grid column-->
-
-        <!--Grid column-->
-        <div class="col-md-6 mb-4">
-
-          <!--Content-->
-          <div class="p-4">
-
-            <div class="mb-3">
-              <h3>Teddy1</h3>
-            </div>
-
-            <p class="lead">
-              <span class="mr-1">
-                <del>$200</del>
-              </span>
-              <span>$100</span>
-            </p>
-
-            <p class="lead font-weight-bold">Description</p>
-
-            <p>Joli nounours</p>
-
-            <form class="d-flex justify-content-left">
-                <!-- Default input -->
-                <select>
-                    <option value="bleu">bleu</option>
-                    <option value="rouge">rouge</option>
-                    <option value="gris">gris</option>
-                </select>
-                <button class="btn btn-primary btn-md my-0 p" type="submit">Personnaliser 
-                  <i class=""></i>
-                </button>
-            </form>
-
-            <form class="d-flex justify-content-left">
-              <!-- Default input -->
-              <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">
-              <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
-                <i class="fas fa-shopping-cart ml-1"></i>
-              </button>
-
-            </form>
-
-          </div>
-          <!--Content-->
-
-        </div>
-        <!--Grid column-->
-
+    <footer style="position: fixed; bottom: 0; display: flex; justify-content: space-around; width: 100%; padding: 20px; background-color: rgb(242, 232, 240);">
+      <div>
+        <i class="fab fa-instagram-square fa-2x"></i>
       </div>
-      <!--Grid row-->
+      <div><i class="fab fa-facebook-square fa-2x"></i></div>
+      <div><i class="fab fa-twitter fa-2x"></i></div>
+    </footer>
 
-      
-    <!-- Social icons -->
-
+    <script src="pageProduct.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
-
 </html>
