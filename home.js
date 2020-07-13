@@ -34,8 +34,6 @@ const renderProducts = () => {
       divCardBody.classList.add("card-body");
       divCard.appendChild(divCardBody);
 
-      
-
       const img = document.createElement("img");
       img.classList.add("card-img-top");
       img.setAttribute("src", teddy.imageUrl);
@@ -67,11 +65,10 @@ const renderProducts = () => {
       //  on ajoute la div principale a l'element du dom selectionne plus tot (ligne 10)
       products.appendChild(divCard);
 
+      // on stocke le teddy selectionner 
       buttonCard.onclick = function storeData(){
       window.localStorage.setItem('productDetails', teddy);
       console.log(localStorage.getItem('productDetails'));
-      
-        //window.open("page_produit.php", "_self");
       };
       
     });
