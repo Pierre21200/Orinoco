@@ -2,8 +2,14 @@
 
 
 
-let objetProduit = window.localStorage.getItem("productDetails");
+let objetProduit = JSON.stringify(window.localStorage.getItem("productDetails"));
+
 console.log(objetProduit);
+
+
+
+
+
 
 
 

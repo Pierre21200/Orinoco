@@ -1,11 +1,11 @@
 // desole les commentaires sont sans accents, c'est la galere avec mon clavier
 
 // la function retourne juste la promesse renvoye par le fetch
-const getTeddies = url => {
+const getteddies = url => {
   return fetch(url).then(response => response.json());
 };
 
-// l'url appelle dans la function getTeddies
+// l'url appelle dans la function getteddies
 const url = "http://localhost:3000/api/teddies";
 
 // on selectionne d'abord l'element du dom ou l'on va ajoute tous nos elements
@@ -14,8 +14,8 @@ const products = document.querySelector("#product-item");
 // function permettant de cree nos produits et les ajouter a l'element principale du dom qui est en l'ocurence products (ligne 10)
 // pour exectuer la function il faut l'appeler, voir plus bas
 const renderProducts = () => {
-  // appelle de la function getTeddies afin de l'executer
-  getTeddies(url).then(teddies => {     // teddies = response ? 
+  // appelle de la function getteddies afin de l'executer
+  getteddies(url).then(teddies => {     // teddies = response ? 
     // ouvre ta console
     console.log("liste des teddies: ", teddies); // teddies = response ? 
 
@@ -62,15 +62,13 @@ const renderProducts = () => {
     
       
 
-      //  on ajoute la div principale a l'element du dom selectionne plus tot (ligne 10)
+      //  on ajoute la div principale a l'élément du dom selectionné plus tot (ligne 10)
       products.appendChild(divCard);
 
-      // on stocke le teddy selectionner 
+      // on stocke le teddy selectionné 
       buttonCard.onclick = function storeData(){
       window.localStorage.setItem('productDetails', teddy);
-      console.log(localStorage.getItem('productDetails'));
-      };
-      
+      }; 
     });
   });
 };
