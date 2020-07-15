@@ -51,12 +51,13 @@ const renderProducts = () => {
       price.innerHTML = teddy.price;
 
       const a = document.createElement("a");
-      a.setAttribute("href", "page-produit.html");
+      a.setAttribute("href", `page-produit.html?teddy=${teddy._id}`); // 
       divCardBody.appendChild(a); 
 
       const buttonCard = document.createElement("button");
       buttonCard.classList.add("btn", "btn-primary");
       buttonCard.setAttribute("type","button");
+      
       buttonCard.innerText = "Sélectionner";
       a.appendChild(buttonCard);
     
@@ -65,10 +66,7 @@ const renderProducts = () => {
       //  on ajoute la div principale a l'élément du dom selectionné plus tot (ligne 10)
       products.appendChild(divCard);
 
-      // on stocke le teddy selectionné 
-      buttonCard.onclick = function storeData(){
-      window.localStorage.setItem('productDetails', teddy);
-      }; 
+      
     });
   });
 };
