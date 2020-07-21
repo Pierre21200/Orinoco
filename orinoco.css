@@ -1,0 +1,111 @@
+ .body-home{
+  
+    padding-bottom: 75px;
+}
+
+.body-cart {
+    padding-bottom: 100px;
+}
+
+.row {
+    margin: 0;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+header {
+    padding: 25px;
+    background-color: rgb(242, 232, 240);
+}
+
+.i-cart {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+
+.title {
+    justify-content: center;
+    text-align: center;
+}
+
+
+
+@font-face /* permet d'utiliser une police personnalisée, avec notemment fontsquirrel.com. */
+{
+	font-family: 'BH'; /* c'est le nom du fichier qu'on va chercher, on peut le faire en relatif s'il se trouve dans un sous dossier. PLus bas, on utilise plusieurs formats pour être sur que l'un soit lu par le navigateur, car tout les navigateur ne lisent pas tout les formats. */
+    src: url('BH.otf') format('otf'), /*  OpenType Font. Ne fonctionne pas sur Internet Explorer. */
+    	url('BH.eot') format('eot'), /* Embedded OpenType. Fonctionne sur Internet Explorer uniquement, toutes versions. Ce format est propriétaire, produit par Microsoft. */
+        url('BH.ttf') format('truetype'), /* TrueType Font. Fonctionne sur IE9 et tous les autres navigateurs. */
+        url('BH.svg') format('svg'); /* SVG Font. Le seul format reconnu sur les iPhones et iPads pour le moment. */
+}
+
+.orinoco-font {
+    font-family: 'BH';
+}
+
+
+
+.product-list {
+    height: 80%;
+}
+
+select {
+    margin: 10px;
+}
+.header-cart {
+    border-bottom: black dashed 3px;
+    padding-bottom: 15px;
+}
+.container-cart {
+    padding-top: 30px;
+
+}
+.cart {
+    padding-top: 50px; 
+}
+
+h2 {
+    text-transform: lowercase;
+}
+
+.item-cart {
+    padding: 10px;
+}
+
+.btn-home {
+    margin: 10px;
+}
+
+.btn-dark {
+    cursor: default;
+}
+
+.container-total-price {
+    padding-top: 30px;
+   
+}
+
+.bold {
+    font-weight: bold;
+}
+
+
+
+footer {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 20px;
+    background-color: rgb(242, 232, 240);
+}
+

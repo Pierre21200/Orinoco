@@ -1,77 +1,134 @@
-// desole les commentaires sont sans accents, c'est la galere avec mon clavier
+// Page d'acceuil
 
-// la function retourne juste la promesse renvoye par le fetch
-const getteddies = url => {
+// La fonction getteddies nous retourne la promesse renvoye par le fetch !!!! mettre en avant avantages de fetch par rapport a ancienne requete
+const getTeddies = url => {
   return fetch(url).then(response => response.json());
 };
 
-// l'url appelle dans la function getteddies
+// l'url appelé dans la fonction getteddies
 const url = "http://localhost:3000/api/teddies";
 
-// on selectionne d'abord l'element du dom ou l'on va ajoute tous nos elements
+// On selectionne l'élément du dom ou l'on va ajoute tous nos elements
 const products = document.querySelector("#product-item");
 
-// function permettant de cree nos produits et les ajouter a l'element principale du dom qui est en l'ocurence products (ligne 10)
-// pour exectuer la function il faut l'appeler, voir plus bas
+// La fonction renderProducts permet :
 const renderProducts = () => {
-  // appelle de la function getteddies afin de l'executer
-  getteddies(url).then(teddies => {     // teddies = response ? 
-    // ouvre ta console
-    console.log("liste des teddies: ", teddies); // teddies = response ? 
+  // D'appeller la function getteddies afin de l'executer
+  getTeddies(url).then(teddies => {    
+    // Elle affiche dans la console les éléments du tableau récupérés
+    console.log("liste des teddies: ", teddies); 
 
-    // on itere sur le tableau de teddies renvoye par le backend
-    teddies.forEach((teddy, index) => { // teddy = element du tableau ? 
-      // ouvre ta console
+    // On itere sur le tableau de teddies, pour chaque élément du tableau on va : 
+    teddies.forEach((teddy, index) => { 
+      // L'afficher dans la console, accompagné de son index
       console.log(`teddy numero ${index}: `, teddy);
 
-      // on cree la div principale qui contiendra tous les sous elements
-      const divCard = document.createElement("div");
-      divCard.setAttribute("id", teddy._id);
-      divCard.classList.add("card");
+      // Créer la div principale de l'élément qui contiendra tous les sous elements
+      const card = document.createElement("div");
+      card.setAttribute("id", teddy._id);
+      card.classList.add("card");
 
-      // on créé la carte et ses éléments 
-      const divCardBody = document.createElement("div");
-      divCardBody.classList.add("card-body");
-      divCard.appendChild(divCardBody);
+      // Créer la carte
+      const cardBody = document.createElement("div");
+      cardBody.classList.add("card-body", "row", "align-items-center");
+      card.appendChild(cardBody);
 
-      const img = document.createElement("img");
-      img.classList.add("card-img-top");
-      img.setAttribute("src", teddy.imageUrl);
-      img.setAttribute("alt", teddy.name);
-      divCardBody.appendChild(img);
+      // Div de l'image
+      const containerImage = document.createElement("div");
+      containerImage.classList.add("col-6");
+      cardBody.appendChild(containerImage);
 
-      const name = document.createElement("h5");
-      name.classList.add("card-title");
-      divCardBody.appendChild(name);    
-      name.innerHTML = teddy.name;
-      
-      const price = document.createElement("p");
-      price.classList.add("card-text");
-      divCardBody.appendChild(price);
-      price.innerHTML = teddy.price;
+      // L'image
+      const imageProduct = document.createElement("img");
+      imageProduct.classList.add("card-img-top", "text-center");
+      imageProduct.setAttribute("src", teddy.imageUrl);
+      imageProduct.setAttribute("alt", `¨Photo de l'ours en peluche ${teddy.name}`);
+      containerImage.appendChild(imageProduct);
 
-      const a = document.createElement("a");
-      a.setAttribute("href", `page-produit.html?teddy=${teddy._id}`); // 
-      divCardBody.appendChild(a); 
+      // Div des détails
+      const containerDetails = document.createElement("div");
+      containerDetails.classList.add("col-6", "text-center");
+      cardBody.appendChild(containerDetails);
 
-      const buttonCard = document.createElement("button");
-      buttonCard.classList.add("btn", "btn-primary");
-      buttonCard.setAttribute("type","button");
-      
-      buttonCard.innerText = "Sélectionner";
-      a.appendChild(buttonCard);
+      // Le nom
+      const nameProduct = document.createElement("h2");
+      nameProduct.classList.add("card-title", "text-center", "orinoco-font");  
+      nameProduct.innerHTML = teddy.name;
+      containerDetails.appendChild(nameProduct); 
+
+      // Le prix
+      const priceProduct = document.createElement("h5");
+      priceProduct.classList.add("card-text", "text-center", "orinoco-font");
+      containerDetails.appendChild(priceProduct);
+      priceProduct.innerHTML =  `${teddy.price} €`;
+
+      // Le lien qui va mener à la page produit individuel
+      const linkProduct = document.createElement("a");
+      linkProduct.setAttribute("href", `page-produit.html?teddy=${teddy._id}`);
+      containerDetails.appendChild(linkProduct); 
+
+      // Accompagné du bouton
+      const buttonToProduct = document.createElement("button");
+      buttonToProduct.classList.add("btn", "btn-outline-dark", "orinoco-font");
+      buttonToProduct.setAttribute("type","button");
+      buttonToProduct.innerText = "PERSONNALISER";
+      linkProduct.appendChild(buttonToProduct);
+
+      // Accompagné du bouton
+      const buttonAddToCart = document.createElement("button");
+      buttonAddToCart.classList.add("btn", "btn-outline-dark", "orinoco-font", "btn-home");
+      buttonAddToCart.setAttribute("type","button");
+      buttonAddToCart.innerText = "AJOUTER AU PANIER";
+      containerDetails.appendChild(buttonAddToCart);
+
+
+      //  On ajoute alors la div principale a l'élément du dom selectionné plus tot (ligne 10)
+      products.appendChild(card);
+
+
+      // on stocke dans un tableau le teddy selectionné
+      const product = [teddy.imageUrl, teddy.name, teddy.description, teddy.price]; 
     
+      // on stringify les clés et les valeurs
+      const stringTeddyName = JSON.stringify(teddy.name);
+      const stringProduct = JSON.stringify(product);
       
+      // On initie la fonction permettant le stockage du tableau stringifié dans le local storage 
+      const addToCart = teddy => {
+        localStorage.setItem(stringTeddyName, stringProduct);
+      };
 
-      //  on ajoute la div principale a l'élément du dom selectionné plus tot (ligne 10)
-      products.appendChild(divCard);
+      const darkButton = () => {
+      // Pour que le bouton reste noir quand on ajoute l'article au panier 
+      buttonAddToCart.innerText = "L'ARTICLE A BIEN ETE AJOUTE AU PANIER !";
+      buttonAddToCart.classList.remove("btn-outline-dark");
+      buttonAddToCart.classList.add("btn-dark");
 
+      // Pour que le bouton mene à la page panier
+      const linkAddToCart = document.createElement("a");
+      linkAddToCart.setAttribute("href", "panier.html");
+      linkAddToCart.classList.add("text-center"); 
+      containerDetails.appendChild(linkAddToCart); 
+      linkAddToCart.appendChild(buttonAddToCart);
+      }
+
+      // on execute la fonction lorsque l'utilisateur clique sur le bouton
+      buttonAddToCart.addEventListener('click', () => {
+      addToCart();
+      darkButton();      
+      });  
       
+ 
+      // chercher une solution ce dédoublement de code : 
+      if (localStorage.getItem(stringTeddyName)) {
+        darkButton();
+        
+      }
     });
   });
 };
 
-// appelle de la function afin de l'executer
+// Finalement, on execute la fonction
 renderProducts();
 
 
