@@ -14,6 +14,8 @@ const getOneTeddy = url => {
 // on initie la fonction qui va nous permettre, avec la promesse renvoyée : 
 const renderProducts = () => {
       getOneTeddy(url).then(teddy => {
+
+            
          
       // on sélectionne la div dans laquelle on va palcer tout nos éléments     
       const pageProduct = document.querySelector("#pageProduct");
@@ -72,36 +74,33 @@ const renderProducts = () => {
 
 
 
-      // on stocke dans un tableau le teddy selectionné
-      const product = [teddy.imageUrl, teddy.name, teddy.description, teddy.price]; 
-    
-      // on stringify les clés et les valeurs
-      const stringTeddyName = JSON.stringify(teddy.name);
-      const stringProduct = JSON.stringify(product);
+      const localCartLenght = JSON.parse(localStorage.getItem("cart")).length;
+      const articleNumber = document.getElementById("article-number");
+      articleNumber.innerText = localCartLenght;
 
       // On initie la fonction permettant le stockage du tableau stringifié dans le local storage 
-      const addToCart = teddy => {
-            localStorage.setItem(stringTeddyName, stringProduct);
+      const addToCart = () => {
+            if (localStorage.getItem("cart")) {
+              let cart = JSON.parse(localStorage.getItem("cart"));
+              cart = [...cart, teddy]; 
+              localStorage.setItem("cart", JSON.stringify(cart));
+            } else {
+              let cart = [];
+              cart = [...cart, teddy]; 
+              localStorage.setItem("cart", JSON.stringify(cart));
+            }  
+      
+            const localCartLenght = JSON.parse(localStorage.getItem("cart")).length;
+            console.log(localCartLenght);
+            const articleNumber = document.getElementById("article-number");
+            articleNumber.innerText = localCartLenght;
+      
           };
-    
-          const darkButton = () => {
-          // Pour que le bouton reste noir quand on ajoute l'article au panier 
-          buttonAddToCart.innerText = "L'ARTICLE A BIEN ETE AJOUTE AU PANIER !";
-          buttonAddToCart.classList.remove("btn-outline-dark");
-          buttonAddToCart.classList.add("btn-dark");
-    
-          // Pour que le bouton mene à la page panier
-          const linkAddToCart = document.createElement("a");
-          linkAddToCart.setAttribute("href", "panier.html");
-          linkAddToCart.classList.add("text-center"); 
-          listProduct.appendChild(linkAddToCart); 
-          linkAddToCart.appendChild(buttonAddToCart);
-          }
     
           // on execute la fonction lorsque l'utilisateur clique sur le bouton
           buttonAddToCart.addEventListener('click', () => {
           addToCart();
-          darkButton();      
+            
           });  
           
       })

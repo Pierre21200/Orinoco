@@ -14,7 +14,8 @@ const products = document.querySelector("#product-item");
 // La fonction renderProducts permet :
 const renderProducts = () => {
   // D'appeller la function getteddies afin de l'executer
-  getTeddies(url).then(teddies => {    
+  getTeddies(url).then(teddies => { 
+  
     // Elle affiche dans la console les éléments du tableau récupérés
     console.log("liste des teddies: ", teddies); 
 
@@ -81,57 +82,55 @@ const renderProducts = () => {
       buttonAddToCart.innerText = "AJOUTER AU PANIER";
       containerDetails.appendChild(buttonAddToCart);
 
-
       //  On ajoute alors la div principale a l'élément du dom selectionné plus tot (ligne 10)
       products.appendChild(card);
 
-
-      // on stocke dans un tableau le teddy selectionné
-      const product = [teddy.imageUrl, teddy.name, teddy.description, teddy.price]; 
-    
-      // on stringify les clés et les valeurs
-      const stringTeddyName = JSON.stringify(teddy.name);
-      const stringProduct = JSON.stringify(product);
       
-      // On initie la fonction permettant le stockage du tableau stringifié dans le local storage 
-      const addToCart = teddy => {
-        localStorage.setItem(stringTeddyName, stringProduct);
-      };
 
-      const darkButton = () => {
-      // Pour que le bouton reste noir quand on ajoute l'article au panier 
-      buttonAddToCart.innerText = "L'ARTICLE A BIEN ETE AJOUTE AU PANIER !";
-      buttonAddToCart.classList.remove("btn-outline-dark");
-      buttonAddToCart.classList.add("btn-dark");
 
-      // Pour que le bouton mene à la page panier
-      const linkAddToCart = document.createElement("a");
-      linkAddToCart.setAttribute("href", "panier.html");
-      linkAddToCart.classList.add("text-center"); 
-      containerDetails.appendChild(linkAddToCart); 
-      linkAddToCart.appendChild(buttonAddToCart);
-      }
+
+      // On met a jour notre cart en ajoutant le teddy selectionné    
+      const addToCart = () => {
+
+        // on modifie l'id de nos teddy avant de les push dans le cart : pas sur que ça soit la meilleure des idées 
+        for (let i = 0; i < teddies.length; i++) {
+          teddy._id = teddy._id+[i];
+        }
+
+      // si le cart existe dans le local storage, on le récupère dans la const cart, on la met à jour, puis on la push  
+      if (localStorage.getItem("cart")) {
+        let cart = JSON.parse(localStorage.getItem("cart"));
+        cart = [...cart, teddy]; 
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+      // si il n'existe pas, on le crée, on l'a rempli, puis on la push
+      } else {
+        let cart = [];
+        cart = [...cart, teddy]; 
+        localStorage.setItem("cart", JSON.stringify(cart));
+      } 
+
+      // on affiche le nombre d'article dans le panier lors d'un ajout
+      const cart = JSON.parse(localStorage.getItem("cart"));
+            const articleNumber = document.getElementById("article-number");
+            articleNumber.innerText = cart.length;
+    };
+
+    // affiche le nombre d'artcile dans le panier avec l'ouverture de la page home
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    const articleNumber = document.getElementById("article-number");
+    articleNumber.innerText = cart.length;  
+
 
       // on execute la fonction lorsque l'utilisateur clique sur le bouton
       buttonAddToCart.addEventListener('click', () => {
-      addToCart();
-      darkButton();      
+      addToCart();         
       });  
-      
- 
-      // chercher une solution ce dédoublement de code : 
-      if (localStorage.getItem(stringTeddyName)) {
-        darkButton();
-        
-      }
+    
     });
-  });
+  });   
 };
 
 // Finalement, on execute la fonction
 renderProducts();
-
-
-
-
 
