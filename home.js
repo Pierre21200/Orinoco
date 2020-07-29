@@ -88,38 +88,62 @@ const renderProducts = () => {
       
 
 
+      localCart = JSON.parse(localStorage.getItem("cart"));
 
       // On met a jour notre cart en ajoutant le teddy selectionné    
       const addToCart = () => {
 
         // on modifie l'id de nos teddy avant de les push dans le cart : pas sur que ça soit la meilleure des idées 
-        for (let i = 0; i < teddies.length; i++) {
-          teddy._id = teddy._id+[i];
-        }
+        // for (let i = 0; i < teddies.length; i++) {
+        //   teddy._id = teddy._id+[i];
+        // }
+
+      
 
       // si le cart existe dans le local storage, on le récupère dans la const cart, on la met à jour, puis on la push  
-      if (localStorage.getItem("cart")) {
-        let cart = JSON.parse(localStorage.getItem("cart"));
-        cart = [...cart, teddy]; 
-        localStorage.setItem("cart", JSON.stringify(cart));
+      if (localCart && localCart.length > 0 ) {
+
+        console.log("ok");
+
+
+      
+        localCart.forEach(el => {
+          if (el._id === teddy._id) {
+            console.log("encore plus ok");
+            el.quantity += 1;
+            localStorage.setItem("cart", JSON.stringify(localCart));            
+          }
+
+          else {
+          console.log("hein ?");
+          teddy = {... teddy, quantity : 1};
+          localCart = [...localCart, teddy]; 
+          localStorage.setItem("cart", JSON.stringify(localCart));
+          }
+        });
+          
 
       // si il n'existe pas, on le crée, on l'a rempli, puis on la push
       } else {
-        let cart = [];
-        cart = [...cart, teddy]; 
-        localStorage.setItem("cart", JSON.stringify(cart));
+        console.log("pas ok")
+        teddy = {... teddy, quantity : 1};
+        localCart = [];
+        localCart = [...localCart, teddy]; 
+        localStorage.setItem("cart", JSON.stringify(localCart));
       } 
 
       // on affiche le nombre d'article dans le panier lors d'un ajout
-      const cart = JSON.parse(localStorage.getItem("cart"));
-            const articleNumber = document.getElementById("article-number");
-            articleNumber.innerText = cart.length;
+      
+      
+      // const cart = JSON.parse(localStorage.getItem("cart"));
+      //       const articleNumber = document.getElementById("article-number");
+      //       articleNumber.innerText = cart.length;
     };
 
     // affiche le nombre d'artcile dans le panier avec l'ouverture de la page home
-    const cart = JSON.parse(localStorage.getItem("cart"));
-    const articleNumber = document.getElementById("article-number");
-    articleNumber.innerText = cart.length;  
+    // const cart = JSON.parse(localStorage.getItem("cart"));
+    // const articleNumber = document.getElementById("article-number");
+    // articleNumber.innerText = cart.length;  
 
 
       // on execute la fonction lorsque l'utilisateur clique sur le bouton

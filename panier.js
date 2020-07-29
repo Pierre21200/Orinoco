@@ -194,17 +194,17 @@ const displayCart = async () => {
 
     // envoi des données au serveur
     // on initie postData
-    const postData = async (method, url, dataElt) => {
-        const response = await fetch(url, {
-            headers: {
-                'Content-type' : 'application/json'
+    // const postData = async (method, url, dataElt) => {
+    //     const response = await fetch(url, {
+    //         headers: {
+    //             'Content-type' : 'application/json'
 
-            },
-            method,
-            body: JSON.stringify(dataElt)
-        })
-        return await response.json();
-    }
+    //         },
+    //         method,
+    //         body: JSON.stringify(dataElt)
+    //     })
+    //     return await response.json();
+    // }
 
     // const response = await postData('POST', 'http://localhost:3000/api/teddies/order', contact)
 
