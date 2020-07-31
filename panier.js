@@ -33,9 +33,7 @@ const headerPrice = document.createElement("h3");
     headerCart.appendChild(headerPrice);
 
    
-const localCartLenght = JSON.parse(localStorage.getItem("cart")).length;
-    const articleNumber = document.getElementById("article-number");
-    articleNumber.innerText = localCartLenght;
+
 
 
 // on initie la variable totalPrice pour éviter problème de scope           
