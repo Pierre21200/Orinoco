@@ -97,18 +97,30 @@ const renderProducts = () => {
       // on execute la fonction lorsque l'utilisateur clique sur le bouton
       buttonAddToCart.addEventListener('click', () => {
 
-        localCart = localStorage.getItem("cart");
+        localCart = JSON.parse(localStorage.getItem("cart"));
       
         
         if (localCart && localCart.length > 0) {
-        // const found = localCart.find(element => element._id == teddy._id);
-          localCart = JSON.parse(localStorage.getItem("cart"));
+
+          const found = localCart.find(element => element._id == teddy._id);
+          
+          if (found) {
+            console.log("incrémenter quantité");
+            localCart.forEach(element => {
+            element.quantity += 1;
+            });
+            localStorage.setItem("cart", JSON.stringify(localCart));
+          }
+          else {
+          teddy = {...teddy, quantity : 1};
           localCart = [...localCart, teddy];
           localStorage.setItem("cart", JSON.stringify(localCart));
+          }                  
+          
         }
 
         else {
-          console.log("pas de cart");
+          teddy = {...teddy, quantity : 1};
           let localCart = [];
           localCart = [...localCart, teddy];
           localStorage.setItem("cart", JSON.stringify(localCart));     
