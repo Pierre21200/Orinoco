@@ -11,8 +11,26 @@ const url = "http://localhost:3000/api/teddies";
 // On selectionne l'élément du dom ou l'on va ajoute tous nos elements
 const products = document.querySelector("#product-item");
 
+// variables affichant le nombre d'article 
+let articleNumber = document.getElementById("article-number");
+let articleNumberText = 0;
+
+
+let localCart = JSON.parse(localStorage.getItem("cart"));
+
+
 // La fonction renderProducts permet :
 const renderProducts = () => {
+
+  if (localCart && localCart.length > 0) {
+    localCart.forEach(element => {
+      articleNumberText += element.quantity;
+      articleNumber.innerText = articleNumberText;
+    });
+  } else {
+    articleNumber.innerText = 0;
+  }
+  
 
   // D'appeller la function getteddies afin de l'executer
   getTeddies(url).then(teddies => { 
@@ -109,6 +127,10 @@ const renderProducts = () => {
           localCart = [...localCart, teddy];
           localStorage.setItem("cart", JSON.stringify(localCart));     
         } 
+
+        articleNumberText += 1; 
+        articleNumber.innerText = articleNumberText;
+
       });            
     });
   }); 

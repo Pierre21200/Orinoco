@@ -12,17 +12,26 @@ const getOneTeddy = url => {
     };
 
 
+// variables affichant le nombre d'article 
+let articleNumber = document.getElementById("article-number");
+let articleNumberText = 0;
+
 let localCart = JSON.parse(localStorage.getItem("cart"));
 
 // on initie la fonction qui va nous permettre, avec la promesse renvoyée : 
 const renderProducts = () => {
 
+  if (localCart && localCart.length > 0) {
+    localCart.forEach(element => {
+      articleNumberText += element.quantity;
+      articleNumber.innerText = articleNumberText;
+    });
+  } else {
+    articleNumber.innerText = 0;
+  }
+
       getOneTeddy(url).then(teddy => {
-
-      
-
-
-         
+       
       // on sélectionne la div dans laquelle on va palcer tout nos éléments     
       const pageProduct = document.querySelector("#pageProduct");
 
@@ -86,36 +95,40 @@ const renderProducts = () => {
       
     
           // on execute la fonction lorsque l'utilisateur clique sur le bouton
-          buttonAddToCart.addEventListener('click', () => {
-          
-            localCart = JSON.parse(localStorage.getItem("cart"));
-              
-            if (localCart && localCart.length > 0) {
-        
-              const found = localCart.find(element => element._id == teddy._id);
-          
-              if (found) {
-                localCart.forEach(element => {
-                element.quantity += 1;
-                });
-                localStorage.setItem("cart", JSON.stringify(localCart));
-              }
-              else {
-              teddy = {...teddy, quantity : 1};
-              localCart = [...localCart, teddy];
-              localStorage.setItem("cart", JSON.stringify(localCart));
-              }                  
-          
-            }
+      buttonAddToCart.addEventListener('click', () => {
 
-            else {
-            teddy = {...teddy, quantity : 1};
-            let localCart = [];
-            localCart = [...localCart, teddy];
-            localStorage.setItem("cart", JSON.stringify(localCart));     
-            }  
-            
-          });  
+        localCart = JSON.parse(localStorage.getItem("cart"));
+
+        if (localCart && localCart.length > 0) {
+  
+          const found = localCart.find(element => element._id == teddy._id);
+          
+          if (found) {
+            found.quantity +=1;
+            localStorage.setItem("cart", JSON.stringify(localCart));
+          }
+          
+          else {
+          teddy = {...teddy, quantity : 1};
+          localCart = [...localCart, teddy];
+          localStorage.setItem("cart", JSON.stringify(localCart));
+          }                  
+          
+        }
+
+        else {
+          teddy = {...teddy, quantity : 1};
+          let localCart = [];
+          localCart = [...localCart, teddy];
+          localStorage.setItem("cart", JSON.stringify(localCart));     
+        } 
+
+        articleNumberText += 1; 
+        articleNumber.innerText = articleNumberText;
+
+      }); 
+
+          
           
         })
 }

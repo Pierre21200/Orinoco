@@ -3,6 +3,11 @@ const getCart = async () => {
     return await JSON.parse(localStorage.getItem("cart"))
 }
 
+
+// variables affichant le nombre d'article 
+let articleNumber = document.getElementById("article-number");
+let articleNumberText = 0;
+
 // on sélectionne la div dans laquelle on va placer nos informations 
 const containerCart = document.querySelector("#container-cart");
     containerCart.classList.add("container-cart", "align-items-center");
@@ -46,6 +51,13 @@ let localCart = JSON.parse(localStorage.getItem("cart"));
 const displayCart = async () => {
 
     if (localCart && localCart.length > 0) {
+
+        
+            localCart.forEach(element => {
+              articleNumberText += element.quantity;
+              articleNumber.innerText = articleNumberText;
+            });
+           
 
         getCart().then(teddies => {
 
@@ -141,6 +153,12 @@ const displayCart = async () => {
 
                     } 
 
+
+                    articleNumberText -= 1; 
+                    articleNumber.innerText = articleNumberText;
+            
+     
+
                 });      
             
             });
@@ -187,7 +205,10 @@ const displayCart = async () => {
         emptyCart.classList.add("col-12", "orinoco-font", "bold", "text-center", "empty-cart")
         emptyCart.innerText = "VOTRE PANIER EST VIDE";
         body.appendChild(emptyCart);
+
+        articleNumber.innerText = 0;
     }
+
 
     
 
