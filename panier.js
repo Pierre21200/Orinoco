@@ -27,135 +27,176 @@ const headerDescription = document.createElement("h3");
     headerDescription.innerHTML = "description"; 
     headerCart.appendChild(headerDescription);
 
+const headerQuantity = document.createElement("h3");
+    headerQuantity.classList.add("col-1", "text-center", "orinoco-font");
+    headerQuantity.innerHTML = "quantite"; 
+    headerCart.appendChild(headerQuantity);
+
 const headerPrice = document.createElement("h3");
     headerPrice.innerHTML = "prix"; 
-    headerPrice.classList.add("col-2", "text-center", "orinoco-font");
+    headerPrice.classList.add("col-1", "text-center", "orinoco-font");
     headerCart.appendChild(headerPrice);
 
-   
-
-
-
-// on initie la variable totalPrice pour éviter problème de scope           
+// on initie les variables pour éviter problème de scope           
 let totalPrice = 0;
 
-
-const localCart = JSON.parse(localStorage.getItem("cart")); 
-
+let localCart = JSON.parse(localStorage.getItem("cart")); 
 
 // on initie la fonciton displaycart
 const displayCart = async () => {
 
-    // Qui récupère les données du local storage avec getCart, le tableau teddies 
-    getCart().then(teddies => {
+    if (localCart && localCart.length > 0) {
 
-        // et pour chacun de ses éléments, on construit notre panier :
-        teddies.forEach(teddy => {
+        getCart().then(teddies => {
 
-            const cart = document.createElement("div");
-            cart.classList.add("row", "align-items-center", "cart");
-            cart.setAttribute("id", "cart");
-            containerCart.appendChild(cart);
+            // et pour chacun de ses éléments, on construit notre panier :
+            teddies.forEach(teddy => {
 
-            const img = document.createElement("img");
-            img.classList.add("col-2", "text-center");
-            img.setAttribute("src", teddy.imageUrl);
-            img.setAttribute("alt", teddy.name);
-            img.setAttribute("style", "max-height : 150px");
-            cart.appendChild(img);           
+                const cart = document.createElement("div");
+                cart.classList.add("row", "align-items-center", "cart");
+                cart.setAttribute("id", "cart");
+                containerCart.appendChild(cart);
 
-            const name = document.createElement("h2");
-            name.classList.add ("orinoco-font", "col-2", "text-center");
-            name.innerText = teddy.name;
-            cart.appendChild(name);           
+                const img = document.createElement("img");
+                img.classList.add("col-2", "text-center");
+                img.setAttribute("src", teddy.imageUrl);
+                img.setAttribute("alt", teddy.name);
+                img.setAttribute("style", "max-height : 150px");
+                cart.appendChild(img);           
 
-            const description = document.createElement ("p");
-            description.innerText = teddy.description;
-            description.classList.add("col-4", "text-center")
-            cart.appendChild(description);
+                const name = document.createElement("h2");
+                name.classList.add ("orinoco-font", "col-2", "text-center");
+                name.innerText = teddy.name;
+                cart.appendChild(name);           
 
-            const price = document.createElement("h5");
-            price.classList.add("orinoco-font", "col-2", "text-center")
-            price.innerText = `${teddy.price} €`;
-            cart.appendChild(price);
+                const description = document.createElement ("p");
+                description.innerText = teddy.description;
+                description.classList.add("col-4", "text-center")
+                cart.appendChild(description);
 
-            const containerButtonSubToCart = document.createElement("div");
-            containerButtonSubToCart.classList.add('col-2', 'text-center'); 
-            cart.appendChild(containerButtonSubToCart);
+                const quantity = document.createElement ("p");
+                quantity.innerText = teddy.quantity;
+                quantity.classList.add("col-1", "text-center")
+                cart.appendChild(quantity);
 
-            const buttonSubToCart = document.createElement("button");
-            buttonSubToCart.innerText = "RETIRER";
-            buttonSubToCart.classList.add("btn", "btn-outline-dark", "orinoco-font", "text-center");
-            buttonSubToCart.setAttribute("type","button");
-            containerButtonSubToCart.appendChild(buttonSubToCart);
-                         
+                const price = document.createElement("h5");
+                price.classList.add("orinoco-font", "col-1", "text-center")
+                let teddyPriceQuantity = teddy.price*teddy.quantity;
+                price.innerText = `${teddyPriceQuantity} €`;
+                cart.appendChild(price);
 
-            // fonction retirer du panier 
-            const subToCart = () => {
-                teddies = teddies.filter(element => element._id != teddy._id ); 
-                localStorage.setItem("cart", JSON.stringify(teddies));  
-                location.reload(true);
-            }
+                const containerButtonSubToCart = document.createElement("div");
+                containerButtonSubToCart.classList.add('col-2', 'text-center'); 
+                cart.appendChild(containerButtonSubToCart);
 
-            // qu'on associe au bouton subToCart
-            buttonSubToCart.addEventListener('click', () => {
-                subToCart();
-                });  
+                const buttonSubToCart = document.createElement("button");
+                buttonSubToCart.innerText = "RETIRER";
+                buttonSubToCart.classList.add("btn", "btn-outline-dark", "orinoco-font", "text-center");
+                buttonSubToCart.setAttribute("type","button");
+                containerButtonSubToCart.appendChild(buttonSubToCart);           
+           
+                // incrémentation du prix             
+                totalPrice += teddyPriceQuantity; 
+            
+                // bouton subToCart
+                buttonSubToCart.addEventListener('click', () => {
 
+                    if (teddy.quantity > 1) {
 
-            // incrémentation du prix            
-            totalPrice += teddy.price; 
-        
-        });  
+                        teddy.quantity -= 1;
 
-        // Bouton confirmer amène le formulaire
-        if (localCart && localCart.length > 0) {
-        const containerTotalPrice = document.createElement("div");
-        containerTotalPrice.classList.add("row", "container-total-price");
-        containerCart.appendChild(containerTotalPrice);
+                        localStorage.setItem("cart", JSON.stringify(teddies));
+                        localCart = JSON.parse(localStorage.getItem("cart")); 
 
-        const empty = document.createElement("div");
-        empty.classList.add("col-7");
-        containerTotalPrice.appendChild(empty);
+                        quantity.innerText = teddy.quantity;
+                        teddyPriceQuantity = teddy.price*teddy.quantity;
+                        price.innerText = `${teddyPriceQuantity} €`;
 
-        const total = document.createElement("h5");
-        total.classList.add("col-1", "orinoco-font", "bold");
-        total.innerText = "TOTAL";
-        containerTotalPrice.appendChild(total);
+                        totalPrice -= teddy.price;
+                        totalPriceText.innerText = `${totalPrice} €`;  
+                   
+                    } else {
 
-        const totalPriceText = document.createElement("h5");
-        totalPriceText.classList.add("col-2", "total-price", "orinoco-font", "text-center", "bold");
-        totalPriceText.innerText = `${totalPrice} €`; 
-        containerTotalPrice.appendChild(totalPriceText); 
+                        teddies = teddies.filter(element => element._id != teddy._id ); 
+                        localStorage.setItem("cart", JSON.stringify(teddies)); 
+                        localCart = JSON.parse(localStorage.getItem("cart")); 
+                        containerCart.removeChild(cart); 
+                        
+                        totalPrice -= teddy.price;
+                        totalPriceText.innerText = `${totalPrice} €`;  
 
-        const containerButtonToConfirm = document.createElement("div");
-        containerButtonToConfirm.classList.add("col-2", "text-center");
-        containerTotalPrice.appendChild(containerButtonToConfirm);
-    
-        const buttonToConfirm = document.createElement("button");
-        buttonToConfirm.classList.add("btn", "btn-outline-dark", "orinoco-font", "bold", "btn-confirm");
-        buttonToConfirm.innerText = "CONFIRMER";
-        containerButtonToConfirm.appendChild(buttonToConfirm);
+                    }
+                    
+                    localCart = JSON.parse(localStorage.getItem("cart")); 
 
+                    if (localCart.length === 0) {
 
-        const getForm = () => {
-            const form = document.getElementById("form");
-            form.setAttribute("style", "visibility : visible");
-        }
+                        containerCart.removeChild(containerTotalPrice);
+                        const body = document.getElementById("container-cart"); 
+                        const emptyCart = document.createElement("p");
+                        emptyCart.classList.add("col-12", "orinoco-font", "bold", "text-center", "empty-cart")
+                        emptyCart.innerText = "VOTRE PANIER EST VIDE";
+                        body.appendChild(emptyCart);
+                        
 
-        buttonToConfirm.addEventListener('click', () => {
-            getForm();        
-            });     
-        }
-    
-        else {
+                    } 
+
+                });      
+            
+            });
+            
+            const containerTotalPrice = document.createElement("div");
+            containerTotalPrice.classList.add("row", "container-total-price");
+            containerCart.appendChild(containerTotalPrice);
+
+            const empty = document.createElement("div");
+            empty.classList.add("col-8");
+            containerTotalPrice.appendChild(empty);
+
+            const total = document.createElement("h5");
+            total.classList.add("col-1", "orinoco-font", "bold");
+            total.innerText = "TOTAL";
+            containerTotalPrice.appendChild(total);
+
+            const totalPriceText = document.createElement("h5");
+            totalPriceText.classList.add("col-1", "total-price", "orinoco-font", "text-center", "bold");
+            totalPriceText.innerText = `${totalPrice} €`; 
+            containerTotalPrice.appendChild(totalPriceText); 
+
+            const containerButtonToConfirm = document.createElement("div");
+            containerButtonToConfirm.classList.add("col-2", "text-center");
+            containerTotalPrice.appendChild(containerButtonToConfirm);
+       
+            const buttonToConfirm = document.createElement("button");
+            buttonToConfirm.classList.add("btn", "btn-outline-dark", "orinoco-font", "bold", "btn-confirm");
+            buttonToConfirm.innerText = "CONFIRMER";
+            containerButtonToConfirm.appendChild(buttonToConfirm);
+
+            buttonToConfirm.addEventListener('click', () => {
+                const form = document.getElementById("form");
+                form.setAttribute("style", "visibility : visible"); 
+            }); 
+
+        })
+
+    }
+
+    else {
         const body = document.getElementById("container-cart"); 
         const emptyCart = document.createElement("p");
         emptyCart.classList.add("col-12", "orinoco-font", "bold", "text-center", "empty-cart")
         emptyCart.innerText = "VOTRE PANIER EST VIDE";
         body.appendChild(emptyCart);
-        }
-    })
+    }
+
+    
+
+
+
+
+
+    // Qui récupère les données du local storage avec getCart, le tableau teddies 
+    
 
     const buttonSubmit = document.getElementById("submit");
 

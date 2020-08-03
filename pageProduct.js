@@ -11,11 +11,17 @@ const getOneTeddy = url => {
       return fetch(url).then(response => response.json());
     };
 
+
+let localCart = JSON.parse(localStorage.getItem("cart"));
+
 // on initie la fonction qui va nous permettre, avec la promesse renvoyée : 
 const renderProducts = () => {
+
       getOneTeddy(url).then(teddy => {
 
-            
+      
+
+
          
       // on sélectionne la div dans laquelle on va palcer tout nos éléments     
       const pageProduct = document.querySelector("#pageProduct");
@@ -72,38 +78,46 @@ const renderProducts = () => {
       buttonAddToCart.setAttribute("type","button");
       listProduct.appendChild(buttonAddToCart);
 
+     
 
 
-      const localCartLenght = JSON.parse(localStorage.getItem("cart")).length;
-      const articleNumber = document.getElementById("article-number");
-      articleNumber.innerText = localCartLenght;
 
       // On initie la fonction permettant le stockage du tableau stringifié dans le local storage 
-      const addToCart = () => {
-            if (localStorage.getItem("cart")) {
-              let cart = JSON.parse(localStorage.getItem("cart"));
-              cart = [...cart, teddy]; 
-              localStorage.setItem("cart", JSON.stringify(cart));
-            } else {
-              let cart = [];
-              cart = [...cart, teddy]; 
-              localStorage.setItem("cart", JSON.stringify(cart));
-            }  
       
-            const localCartLenght = JSON.parse(localStorage.getItem("cart")).length;
-            console.log(localCartLenght);
-            const articleNumber = document.getElementById("article-number");
-            articleNumber.innerText = localCartLenght;
-      
-          };
     
           // on execute la fonction lorsque l'utilisateur clique sur le bouton
           buttonAddToCart.addEventListener('click', () => {
-          addToCart();
+          
+            localCart = JSON.parse(localStorage.getItem("cart"));
+              
+            if (localCart && localCart.length > 0) {
+        
+              const found = localCart.find(element => element._id == teddy._id);
+          
+              if (found) {
+                localCart.forEach(element => {
+                element.quantity += 1;
+                });
+                localStorage.setItem("cart", JSON.stringify(localCart));
+              }
+              else {
+              teddy = {...teddy, quantity : 1};
+              localCart = [...localCart, teddy];
+              localStorage.setItem("cart", JSON.stringify(localCart));
+              }                  
+          
+            }
+
+            else {
+            teddy = {...teddy, quantity : 1};
+            let localCart = [];
+            localCart = [...localCart, teddy];
+            localStorage.setItem("cart", JSON.stringify(localCart));     
+            }  
             
           });  
           
-      })
+        })
 }
 
 renderProducts();    

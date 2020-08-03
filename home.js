@@ -13,16 +13,12 @@ const products = document.querySelector("#product-item");
 
 // La fonction renderProducts permet :
 const renderProducts = () => {
+
   // D'appeller la function getteddies afin de l'executer
   getTeddies(url).then(teddies => { 
-  
-    // Elle affiche dans la console les éléments du tableau récupérés
-    console.log("liste des teddies: ", teddies); 
 
     // On itere sur le tableau de teddies, pour chaque élément du tableau on va : 
     teddies.forEach((teddy, index) => { 
-      // L'afficher dans la console, accompagné de son index
-      console.log(`teddy numero ${index}: `, teddy);
 
       // Créer la div principale de l'élément qui contiendra tous les sous elements
       const card = document.createElement("div");
@@ -84,33 +80,23 @@ const renderProducts = () => {
 
       //  On ajoute alors la div principale a l'élément du dom selectionné plus tot (ligne 10)
       products.appendChild(card);
-
       
-
-
-      
-
-      
-    
-
-
       // on execute la fonction lorsque l'utilisateur clique sur le bouton
       buttonAddToCart.addEventListener('click', () => {
 
         localCart = JSON.parse(localStorage.getItem("cart"));
-      
-        
-        if (localCart && localCart.length > 0) {
 
+        if (localCart && localCart.length > 0) {
+  
           const found = localCart.find(element => element._id == teddy._id);
           
           if (found) {
-            console.log("incrémenter quantité");
             localCart.forEach(element => {
             element.quantity += 1;
             });
             localStorage.setItem("cart", JSON.stringify(localCart));
           }
+          
           else {
           teddy = {...teddy, quantity : 1};
           localCart = [...localCart, teddy];
@@ -124,13 +110,17 @@ const renderProducts = () => {
           let localCart = [];
           localCart = [...localCart, teddy];
           localStorage.setItem("cart", JSON.stringify(localCart));     
-        }    
-
-
-      });  
-    
+        } 
+      });            
     });
-  });   
+  }); 
+  
+
+  
+    
+
+
+
 };
 
 // Finalement, on execute la fonction
