@@ -18,7 +18,7 @@ const renderProducts = () => {
   getTeddies(url).then(teddies => { 
 
     // On itere sur le tableau de teddies, pour chaque élément du tableau on va : 
-    teddies.forEach((teddy, index) => { 
+    teddies.forEach((teddy, index) => {
 
       // Créer la div principale de l'élément qui contiendra tous les sous elements
       const card = document.createElement("div");
@@ -91,9 +91,7 @@ const renderProducts = () => {
           const found = localCart.find(element => element._id == teddy._id);
           
           if (found) {
-            localCart.forEach(element => {
-            element.quantity += 1;
-            });
+            found.quantity +=1;
             localStorage.setItem("cart", JSON.stringify(localCart));
           }
           
