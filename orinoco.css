@@ -119,13 +119,11 @@ h2 {
     justify-content: space-around;
 }
 
-/* .button-footer-home {
-    text-align: left;
+.container-button-home {
+    padding-top: 30px;
+    display: flex;
+    justify-content: center;
 }
-
-.link-cart {
-    text-align: right;
-} */
 
 .clear-cart {
     padding-top: 30px;

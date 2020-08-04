@@ -104,10 +104,6 @@ const displayCart = async () => {
                 quantity.classList.add("col-1")
                 cart.appendChild(quantity);
 
-                
-
-                
-
 
                 const price = document.createElement("h5");
                 price.classList.add("orinoco-font", "col-1", "text-center")
@@ -237,13 +233,28 @@ const displayCart = async () => {
                 containerCart.removeChild(cart);
                 containerCart.removeChild(containerTotalPrice);
                 containerCart.removeChild(clearCart);
+                form.setAttribute("style", "display : none"); 
 
                 const body = document.getElementById("container-cart"); 
                 const emptyCart = document.createElement("p");
                 emptyCart.classList.add("col-12", "orinoco-font", "bold", "text-center", "empty-cart")
-                emptyCart.innerText = "VOTRE PANIER EST VIDE";
+                emptyCart.innerText = "votre panier est vide";
                 body.appendChild(emptyCart);
                 articleNumber.innerText = 0;
+
+                const linkToHome = document.createElement("a");
+                linkToHome.classList.add("link-to-home");
+                linkToHome.setAttribute("href","index.html");
+                containerCart.appendChild(linkToHome);
+
+                const containerButtonToHome = document.createElement("div");
+                containerButtonToHome.classList.add("container-button-home");
+                linkToHome.appendChild(containerButtonToHome);
+
+                const buttonToHome = document.createElement("button");
+                buttonToHome.classList.add("btn", "btn-outline-dark", "orinoco-font", "bold", "center-text");
+                buttonToHome.innerHTML = "<h3>acceuil</h3>";
+                containerButtonToHome.appendChild(buttonToHome);
                 
             })
         })
@@ -254,10 +265,23 @@ const displayCart = async () => {
         const body = document.getElementById("container-cart"); 
         const emptyCart = document.createElement("p");
         emptyCart.classList.add("col-12", "orinoco-font", "bold", "text-center", "empty-cart")
-        emptyCart.innerText = "VOTRE PANIER EST VIDE";
+        emptyCart.innerText = "votre panier est vide";
         body.appendChild(emptyCart);
-
         articleNumber.innerText = 0;
+        
+        const linkToHome = document.createElement("a");
+        linkToHome.classList.add("link-to-home");
+        linkToHome.setAttribute("href","index.html");
+        containerCart.appendChild(linkToHome);
+
+        const containerButtonToHome = document.createElement("div");
+        containerButtonToHome.classList.add("container-button-home");
+        linkToHome.appendChild(containerButtonToHome);
+
+        const buttonToHome = document.createElement("button");
+        buttonToHome.classList.add("btn", "btn-outline-dark", "orinoco-font", "bold", "center-text");
+        buttonToHome.innerHTML = "<h3>acceuil</h3>";
+        containerButtonToHome.appendChild(buttonToHome);
     }
 
 
@@ -298,7 +322,7 @@ const displayCart = async () => {
 
     console.log(cartInformation);
 
-    // localStorage.setItem("contact",JSON.stringify(contact))
+    localStorage.setItem("contact",JSON.stringify(contact))
 
     }
     

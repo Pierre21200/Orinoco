@@ -128,7 +128,7 @@ const renderProducts = () => {
 
 
       const buttonFooterHome = document.createElement("button");
-      buttonFooterHome.classList.add("button-footer-home", "btn", "btn-primary");
+      buttonFooterHome.classList.add("button-footer-home", "btn", "btn-outline-dark");
       buttonFooterHome.setAttribute("data-dismiss", "modal");
       buttonFooterHome.innerHTML = `<h6>Rester</h6>`;
       modalFooter.appendChild(buttonFooterHome);
@@ -139,7 +139,7 @@ const renderProducts = () => {
       modalFooter.appendChild(linkCart);
 
       const buttonFooterCart = document.createElement("button");
-      buttonFooterCart.classList.add("button-footer-cart", "btn","btn-primary");
+      buttonFooterCart.classList.add("button-footer-cart", "btn","btn-outline-dark");
       buttonFooterCart.innerHTML = `<h6>Panier</h6>`;
       linkCart.appendChild(buttonFooterCart);
 
@@ -179,10 +179,6 @@ const renderProducts = () => {
 
         articleNumberText += 1; 
         articleNumber.innerText = articleNumberText;
-
-
-        
-
      
 
       });            

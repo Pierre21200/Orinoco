@@ -39,24 +39,28 @@
             <div class="col-3"></div>
 			<label for="firstName" class="col-3">Prénom</label>
             <input type="text" name="firstName" id="firstName" class="col-3" required/> 	
-		</p>
+            <span id="miss-firstName"></span>
+        </p>
 
         <p class="row text-center">
             <div class="col-3"></div>
             <label for="lastName" class="col-3">Nom</label>
-            <input type="text" name="lastName" id="lastName" class="col-3" required/> 	
+            <input type="text" name="lastName" id="lastName" class="col-3" required/> 
+            <span id="miss-lastName"></span>	
         </p>
 
         <p class="row text-center">
             <div class="col-3"></div>
             <label class="col-3" for="adress">Adresse</label>
             <input class="col-3" type="text" name="adress" id="adress" required/> 
+            <span id="miss-adress"></span>	
         </p>
 
         <p class="row text-center">
             <div class="col-3"></div>
             <label class="col-3" for="city">Ville</label>
             <input class="col-3" type="text" name="city" id="city" required/> 
+            <span id="miss-city"></span>	
         </p>
             
             
@@ -64,6 +68,8 @@
             <div class="col-3"></div>
             <label class="col-3" for="email">Courriel</label>
             <input class="col-3" type="email" name="email" id="email" required>
+            <span id="miss-email"></span>	
+
         </p>
 
             <button id="submit">ENVOYER</button>
