@@ -111,8 +111,26 @@ h2 {
 #form {
     padding-top: 50px;
     padding-bottom: 30px;
-    visibility: hidden;
+    display: none;
 }
+
+.modal-footer {
+    display: flex;
+    justify-content: space-around;
+}
+
+/* .button-footer-home {
+    text-align: left;
+}
+
+.link-cart {
+    text-align: right;
+} */
+
+.clear-cart {
+    padding-top: 30px;
+}
+
 
 
 footer {

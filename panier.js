@@ -32,8 +32,14 @@ const headerDescription = document.createElement("h3");
     headerDescription.innerHTML = "description"; 
     headerCart.appendChild(headerDescription);
 
+
+// const labelHeaderQuantity = document.createElement("label");
+// labelHeaderQuantity.setAttribute("for","quantity");
+// labelHeaderQuantity.classList.add("col-1");
+// headerCart.appendChild(labelHeaderQuantity);
+
 const headerQuantity = document.createElement("h3");
-    headerQuantity.classList.add("col-1", "text-center", "orinoco-font");
+    headerQuantity.classList.add("col-1","text-center", "orinoco-font");
     headerQuantity.innerHTML = "quantite"; 
     headerCart.appendChild(headerQuantity);
 
@@ -59,15 +65,15 @@ const displayCart = async () => {
             });
            
 
-        getCart().then(teddies => {
+            getCart().then(teddies => {
 
-            // et pour chacun de ses éléments, on construit notre panier :
-            teddies.forEach(teddy => {
+                // et pour chacun de ses éléments, on construit notre panier :
+                teddies.forEach(teddy => {
 
-                const cart = document.createElement("div");
-                cart.classList.add("row", "align-items-center", "cart");
-                cart.setAttribute("id", "cart");
-                containerCart.appendChild(cart);
+                    const cart = document.createElement("div");
+                    cart.classList.add("row", "align-items-center", "cart");
+                    cart.setAttribute("id", "cart");
+                    containerCart.appendChild(cart);
 
                 const img = document.createElement("img");
                 img.classList.add("col-2", "text-center");
@@ -86,10 +92,22 @@ const displayCart = async () => {
                 description.classList.add("col-4", "text-center")
                 cart.appendChild(description);
 
-                const quantity = document.createElement ("p");
-                quantity.innerText = teddy.quantity;
-                quantity.classList.add("col-1", "text-center")
+                const quantity = document.createElement ("input");
+                quantity.setAttribute("style","text-align : center");
+                quantity.setAttribute("type","number");
+                quantity.setAttribute("name","quantity");
+                quantity.setAttribute("value",teddy.quantity);
+                quantity.setAttribute("min","0");
+                quantity.setAttribute("max","99");
+                quantity.setAttribute("step","1");
+                quantity.setAttribute("size","1");
+                quantity.classList.add("col-1")
                 cart.appendChild(quantity);
+
+                
+
+                
+
 
                 const price = document.createElement("h5");
                 price.classList.add("orinoco-font", "col-1", "text-center")
@@ -144,32 +162,36 @@ const displayCart = async () => {
                     if (localCart.length === 0) {
 
                         containerCart.removeChild(containerTotalPrice);
+                        containerCart.removeChild(clearCart);
+
+
                         const body = document.getElementById("container-cart"); 
                         const emptyCart = document.createElement("p");
                         emptyCart.classList.add("col-12", "orinoco-font", "bold", "text-center", "empty-cart")
                         emptyCart.innerText = "VOTRE PANIER EST VIDE";
                         body.appendChild(emptyCart);
-                        
 
                     } 
 
 
                     articleNumberText -= 1; 
                     articleNumber.innerText = articleNumberText;
-            
-     
+
 
                 });      
             
             });
+
+
+
             
             const containerTotalPrice = document.createElement("div");
             containerTotalPrice.classList.add("row", "container-total-price");
             containerCart.appendChild(containerTotalPrice);
 
-            const empty = document.createElement("div");
-            empty.classList.add("col-8");
-            containerTotalPrice.appendChild(empty);
+            const emptyTotalPrice = document.createElement("div");
+            emptyTotalPrice.classList.add("col-8");
+            containerTotalPrice.appendChild(emptyTotalPrice);
 
             const total = document.createElement("h5");
             total.classList.add("col-1", "orinoco-font", "bold");
@@ -192,9 +214,38 @@ const displayCart = async () => {
 
             buttonToConfirm.addEventListener('click', () => {
                 const form = document.getElementById("form");
-                form.setAttribute("style", "visibility : visible"); 
+                form.setAttribute("style", "display : block"); 
             }); 
 
+            const clearCart = document.createElement("div");
+            clearCart.classList.add("row", "clear-cart");
+            containerCart.appendChild(clearCart);
+
+            const emptyClear = document.createElement("div");
+            emptyClear.classList.add("col-5");
+            clearCart.appendChild(emptyClear);
+
+            const buttonClearCart = document.createElement("button");
+            buttonClearCart.classList.add("btn", "btn-outline-dark", "orinoco-font", "bold", "btn-clear", "col-2");
+            buttonClearCart.innerText = "VIDER LE PANIER";
+            clearCart.appendChild(buttonClearCart);
+
+            buttonClearCart.addEventListener('click', () => {
+                let localCart = [];
+                localStorage.setItem("cart", JSON.stringify(localCart));
+
+                containerCart.removeChild(cart);
+                containerCart.removeChild(containerTotalPrice);
+                containerCart.removeChild(clearCart);
+
+                const body = document.getElementById("container-cart"); 
+                const emptyCart = document.createElement("p");
+                emptyCart.classList.add("col-12", "orinoco-font", "bold", "text-center", "empty-cart")
+                emptyCart.innerText = "VOTRE PANIER EST VIDE";
+                body.appendChild(emptyCart);
+                articleNumber.innerText = 0;
+                
+            })
         })
 
     }

@@ -93,8 +93,57 @@ const renderProducts = () => {
       const buttonAddToCart = document.createElement("button");
       buttonAddToCart.classList.add("btn", "btn-outline-dark", "orinoco-font", "btn-home");
       buttonAddToCart.setAttribute("type","button");
+      buttonAddToCart.setAttribute("data-toggle","modal");
+      buttonAddToCart.setAttribute("data-target","#addToCart");
       buttonAddToCart.innerText = "AJOUTER AU PANIER";
       containerDetails.appendChild(buttonAddToCart);
+
+
+
+      // Modal addtocart
+      const modal = document.createElement("div");
+      modal.classList.add("modal","fade");
+      modal.setAttribute("id","addToCart");
+      containerDetails.appendChild(modal);
+
+      const modalDialog = document.createElement("div");
+      modalDialog.classList.add("modal-dialog", "modal-sm");
+      modal.appendChild(modalDialog);
+
+      const modalContent = document.createElement("div");
+      modalContent.classList.add("modal-content");
+      modalDialog.appendChild(modalContent);
+
+      const modalBody = document.createElement("div");
+      modalBody.classList.add("modal-body");
+      modalBody.innerHTML = `<h5>L'article a bien été ajouté au panier </h5>`;
+      modalContent.appendChild(modalBody);
+
+      const modalFooter = document.createElement("div");
+      modalFooter.classList.add("modal-footer", "raw");
+      modalContent.appendChild(modalFooter);
+
+
+
+
+
+      const buttonFooterHome = document.createElement("button");
+      buttonFooterHome.classList.add("button-footer-home", "btn", "btn-primary");
+      buttonFooterHome.setAttribute("data-dismiss", "modal");
+      buttonFooterHome.innerHTML = `<h6>Rester</h6>`;
+      modalFooter.appendChild(buttonFooterHome);
+
+
+      const linkCart = document.createElement("a");
+      linkCart.setAttribute("href","panier.html");
+      modalFooter.appendChild(linkCart);
+
+      const buttonFooterCart = document.createElement("button");
+      buttonFooterCart.classList.add("button-footer-cart", "btn","btn-primary");
+      buttonFooterCart.innerHTML = `<h6>Panier</h6>`;
+      linkCart.appendChild(buttonFooterCart);
+
+
 
       //  On ajoute alors la div principale a l'élément du dom selectionné plus tot (ligne 10)
       products.appendChild(card);
@@ -130,6 +179,11 @@ const renderProducts = () => {
 
         articleNumberText += 1; 
         articleNumber.innerText = articleNumberText;
+
+
+        
+
+     
 
       });            
     });

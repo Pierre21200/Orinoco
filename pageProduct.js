@@ -81,11 +81,68 @@ const renderProducts = () => {
       const br = document.createElement("br");
       listProduct.appendChild(br);
 
+
+      
+      // Accompagné du bouton
       const buttonAddToCart = document.createElement("button");
-      buttonAddToCart.innerHTML = "AJOUTER AU PANIER";
-      buttonAddToCart.classList.add("btn", "btn-outline-dark", "orinoco-font");
+      buttonAddToCart.classList.add("btn", "btn-outline-dark", "orinoco-font", "btn-home");
       buttonAddToCart.setAttribute("type","button");
+      buttonAddToCart.setAttribute("data-toggle","modal");
+      buttonAddToCart.setAttribute("data-target","#addToCart");
+      buttonAddToCart.innerText = "AJOUTER AU PANIER";
       listProduct.appendChild(buttonAddToCart);
+
+
+
+      // Modal addtocart
+      const modal = document.createElement("div");
+      modal.classList.add("modal","fade");
+      modal.setAttribute("id","addToCart");
+      listProduct.appendChild(modal);
+
+      const modalDialog = document.createElement("div");
+      modalDialog.classList.add("modal-dialog", "modal-sm");
+      modal.appendChild(modalDialog);
+
+      const modalContent = document.createElement("div");
+      modalContent.classList.add("modal-content");
+      modalDialog.appendChild(modalContent);
+
+      const modalBody = document.createElement("div");
+      modalBody.classList.add("modal-body");
+      modalBody.innerHTML = `<h5>L'article a bien été ajouté au panier </h5>`;
+      modalContent.appendChild(modalBody);
+
+      const modalFooter = document.createElement("div");
+      modalFooter.classList.add("modal-footer");
+      modalContent.appendChild(modalFooter);
+
+      
+
+      const buttonFooterProduct = document.createElement("button");
+      buttonFooterProduct.classList.add("button-footer-home", "btn", "btn-primary");
+      buttonFooterProduct.setAttribute("data-dismiss", "modal");
+      buttonFooterProduct.innerHTML = `<h6>Rester</h6>`;
+      modalFooter.appendChild(buttonFooterProduct);
+
+      const linkHome = document.createElement("a");
+      linkHome.setAttribute("href","index.html");
+      modalFooter.appendChild(linkHome);
+
+      const buttonFooterHome = document.createElement("button");
+      buttonFooterHome.classList.add("button-footer-home", "btn", "btn-primary");
+      buttonFooterHome.innerHTML = `<h6>Acceuil</h6>`;
+      linkHome.appendChild(buttonFooterHome);
+
+
+      const linkCart = document.createElement("a");
+      linkCart.setAttribute("href","panier.html");
+      modalFooter.appendChild(linkCart);
+
+      const buttonFooterCart = document.createElement("button");
+      buttonFooterCart.classList.add("button-footer-cart", "btn","btn-primary");
+      buttonFooterCart.innerHTML = `<h6>Panier</h6>`;
+      linkCart.appendChild(buttonFooterCart);
 
      
 
