@@ -1,103 +1,116 @@
 <html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <meta name="robots" content="index,follow">   
-        <meta name="description" content=""> 
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-        <title>Orinico's Bear</title>  
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link rel="stylesheet" href="orinoco.css" />
-        <script src="https://kit.fontawesome.com/b3ea1b0c27.js" crossorigin="anonymous"></script>
-    </head>
-<body id="body-cart">
-    <header class="row"> <!-- Modifier police titre et couleur panier-->
-        <div class="col-12 title" >    
-            <h1 class="orinoco-font">
-              <a href="index.html">orinoco's bear</a>
-            </h1>     
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow" />
+    <meta name="description" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Orinico's Bear</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="orinoco.css" />
+    <script
+      src="https://kit.fontawesome.com/b3ea1b0c27.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body id="body-cart">
+    <header class="row">
+      <!-- Modifier police titre et couleur panier-->
+      <div class="col-12 title">
+        <h1 class="orinoco-font">
+          <a href="index.html">orinoco's bear</a>
+        </h1>
+      </div>
+      <a href="panier.html">
+        <div class="i-cart">
+          <i class="fas fa-shopping-cart fa-2x"></i>
         </div>
-        <a href="panier.html">
-        <div class="i-cart" >  
-            <i class="fas fa-shopping-cart fa-2x"></i>
-        </div>
-        </a>
-        <div class="orinoco-font bold cart-number">
-          <p id="article-number"></p>        
-        </div>
-        </header>
+      </a>
+      <div class="orinoco-font bold cart-number">
+        <p id="article-number"></p>
+      </div>
+    </header>
 
-        <div id="container-cart">
-  
-        </div>
-        
+    <div id="container-cart"></div>
 
-        <div id="form" >
-            
-            <form  class="text-center" method="post" action="" post> <!-- on recommande post-->
-        
-        <p class="row text-center">
-            <div class="col-3"></div>
-			<label for="firstName" class="col-3">Prénom</label>
-            <input type="text" name="firstName" id="firstName" class="col-3" required/> 	
-            <span id="miss-firstName"></span>
-        </p>
+    <div id="form">
+      <form class="text-center" method="" action="" post>
+        <!-- on recommande post-->
 
-        <p class="row text-center">
-            <div class="col-3"></div>
-            <label for="lastName" class="col-3">Nom</label>
-            <input type="text" name="lastName" id="lastName" class="col-3" required/> 
-            <span id="miss-lastName"></span>	
-        </p>
-
-        <p class="row text-center">
-            <div class="col-3"></div>
-            <label class="col-3" for="adress">Adresse</label>
-            <input class="col-3" type="text" name="adress" id="adress" required/> 
-            <span id="miss-adress"></span>	
-        </p>
-
-        <p class="row text-center">
-            <div class="col-3"></div>
-            <label class="col-3" for="city">Ville</label>
-            <input class="col-3" type="text" name="city" id="city" required/> 
-            <span id="miss-city"></span>	
-        </p>
-            
-            
-        <p class="row text-center"> 
-            <div class="col-3"></div>
-            <label class="col-3" for="email">Courriel</label>
-            <input class="col-3" type="email" name="email" id="email" required>
-            <span id="miss-email"></span>	
-
-        </p>
-
-            <button id="submit">ENVOYER</button>
-			<!-- <input  class="orinoco-font col-3" type="" name="" value="ENVOYER" id="submit"> -->
-		
-
-
-	</form>
+        <div class="row text-center row-form">
+          <div class="col-2"></div>
+          <label for="firstName" class="col-3">Prénom</label>
+          <input type="text" name="firstName" id="firstName" class="col-3" />
+          <span class="col-3" id="error-firstName"></span>
         </div>
 
+        <div class="row text-center row-form">
+          <div class="col-2"></div>
+          <label for="lastName" class="col-3">Nom</label>
+          <input type="text" name="lastName" id="lastName" class="col-3" />
+          <span id="error-lastName"></span>
+        </div>
 
-        
+        <div class="row text-center row-form">
+          <div class="col-2"></div>
+          <label class="col-3" for="adress">Adresse</label>
+          <input class="col-3" type="text" name="adress" id="adress" />
+          <span id="error-adress"></span>
+        </div>
+
+        <div class="row text-center row-form">
+          <div class="col-2"></div>
+          <label class="col-3" for="city">Ville</label>
+          <input class="col-3" type="text" name="city" id="city" />
+          <span id="error-city"></span>
+        </div>
+
+        <div class="row text-center row-form">
+          <div class="col-2"></div>
+          <label class="col-3" for="email">Courriel</label>
+          <input class="col-3" type="email" name="email" id="email" />
+          <span id="error-email"></span>
+        </div>
+
+        <button id="submit">ENVOYER</button>
+        <!-- <input  class="orinoco-font col-3" type="" name="" value="ENVOYER" id="submit"> -->
+      </form>
+    </div>
+
     <footer>
-        <div>
-            <i class="fab fa-instagram-square fa-2x"></i>
-        </div>
-        <div>
-            <i class="fab fa-facebook-square fa-2x"></i>
-        </div>
-        <div>
-            <i class="fab fa-twitter fa-2x"></i>
-        </div>
+      <div>
+        <i class="fab fa-instagram-square fa-2x"></i>
+      </div>
+      <div>
+        <i class="fab fa-facebook-square fa-2x"></i>
+      </div>
+      <div>
+        <i class="fab fa-twitter fa-2x"></i>
+      </div>
     </footer>
-    
 
-    <script src="panier.js"></script> 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-</body>
+    <script src="panier.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
