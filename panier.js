@@ -366,67 +366,113 @@ const displayCart = async () => {
     const doNotContainSpecialCharacter = value =>
       !value.match(specialCharacter) ? true : false;
 
-    const regexMail = /#^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$#/;
+    const regexMail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     const isValidEmail = value => (!value.match(regexMail) ? true : false);
+
+    const regexAdress = /([0-9]*) ?([a-zA-Z,\. ]*) ?([0-9]{5}) ?([a-zA-Z]*)/;
+    const isValidAdress = value => (!value.match(regexAdress) ? true : false);
 
     const isValidName = value =>
       isNotEmpty(value) &&
       doNotContainNumber(value) &&
       doNotContainSpecialCharacter(value);
 
-    if (isValidName(firstName.value)) {
-      errorFirstName.innerText = "";
-      console.log("coucou");
-    } else {
-      errorFirstName.innerText = "Veuillez renseigner votre prénom";
-      // firstName.focus(); quel focus ?
-      console.log("pas coucou");
-    }
+    const formValidate = () => {
+      if (isValidName(firstName.value)) {
+        errorFirstName.innerText = "";
+      } else {
+        errorFirstName.innerText = "Veuillez renseigner votre prénom";
+        firstName.focus();
+        return false;
+      }
 
-    if (isValidName(lastName.value)) {
-      errorFirstName.innerText = "";
-      console.log("coucou");
-    } else {
-      errorLastName.innerText = "Veuillez renseigner votre nom";
-      //lastName.focus(); quel focus ?
-      console.log("pas coucou");
-    }
+      if (isValidName(lastName.value)) {
+        errorLastName.innerText = "";
+      } else {
+        errorLastName.innerText = "Veuillez renseigner votre nom";
+        lastName.focus();
 
-    if (isValidName(city.value)) {
-      errorCityName.innerText = "";
-      console.log("coucou");
-    } else {
-      errorCity.innerText = "Veuillez renseigner votre nom";
-      //lastName.focus(); quel focus ?
-      console.log("pas coucou");
-    }
+        return false;
+      }
 
-    if (isValidEmail(email.value) && isNotEmpty(email.value)) {
-      errorEmail.innerText = "";
-      console.log("coucou");
-    } else {
-      errorEmail.innerText = "Veuillez renseigner votre nom";
-      //lastName.focus(); quel focus ?
-      console.log("pas coucou");
-    }
+      if (isValidAdress(adress.value) && isNotEmpty(adress.value)) {
+        errorAdress.innerText = "";
+      } else {
+        errorAdress.innerText = "Veuillez renseigner votre adresse postale";
+        adress.focus();
+
+        return false;
+      }
+
+      if (isValidName(city.value)) {
+        errorCity.innerText = "";
+      } else {
+        errorCity.innerText = "Veuillez renseigner votre ville";
+        city.focus();
+
+        return false;
+      }
+
+      if (isNotEmpty(email.value)) {
+        errorEmail.innerText = "";
+      } else {
+        errorEmail.innerText = "Veuillez renseigner votre adesse mail";
+        email.focus();
+
+        return false;
+      }
+
+      let contact = {
+        firstName: firstName.value,
+        lastName: lastName.value,
+        adress: adress.value,
+        city: city.value,
+        email: email.value
+      };
+
+      // var monObjet = {"8":10,"6":4,"12":5} : localCart
+      // var monTableau = Object.keys(monObjet).map(function(cle) {
+      //return [Number(cle), monObjet[cle]];
+      //});
+
+      let monTableau = Object.keys(localCart).map(function (cle) {
+        return [Number(cle), localCart[cle]];
+      });
+      console.log(monTableau);
+
+      const cartInformation = {
+        monTableau,
+        contact
+      };
+
+      // fetch("http://localhost:3000/api/teddies/order")
+      //   .then(response => response.json())
+      //   .then(console.log);
+
+      const postData = async (method, url, dataElt) => {
+        const response = await fetch(url, {
+          headers: {
+            "Content-type": "application/json"
+          },
+          method: method,
+          mode: "cors",
+          body: JSON.stringify(dataElt)
+        });
+        return await response.json();
+      };
+
+      const response = postData(
+        "POST",
+        "http://localhost:3000/api/teddies/order",
+        cartInformation
+      );
+
+      console.log("http://localhost:3000/api/teddies/order");
+      //window.location = `checkout.html?firstName=${contact.firstName}&totalPrice=${totalPrice}`;
+    };
+
+    formValidate();
   });
-
-  // envoi des données au serveur
-  // on initie postData
-  // const postData = async (method, url, dataElt) => {
-  //     const response = await fetch(url, {
-  //         headers: {
-  //             'Content-type' : 'application/json'
-
-  //         },
-  //         method,
-  //         body: JSON.stringify(dataElt)
-  //     })
-  //     return await response.json();
-  // }
-
-  // const response = await postData('POST', 'http://localhost:3000/api/teddies/order', contact)
-  console.log(totalPrice);
 };
 
 displayCart();
