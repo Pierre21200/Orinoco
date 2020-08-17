@@ -5,7 +5,7 @@ let localCart = JSON.parse(localStorage.getItem("cart"));
 let totalPrice = 0;
 
 //fonction
-const createElement = (element, classes, attributes, parent) => {
+const createElement = (element, classes, attributes, text, parent) => {
   const el = document.createElement(element);
   classes.forEach(clas => {
     el.classList.add(clas);
@@ -15,6 +15,7 @@ const createElement = (element, classes, attributes, parent) => {
       el.setAttribute(key, att[key]);
     }
   });
+  el.innerText = text;
   parent.appendChild(el);
   return el;
 };
@@ -49,6 +50,7 @@ const headerCart = createElement(
   "div",
   ["row", "align-items-center", "header-cart"],
   [{}],
+  "",
   containerCart
 );
 
@@ -56,41 +58,41 @@ const headerImg = createElement(
   "h3",
   ["col-2", "text-center", "orinoco-font"],
   [{}],
+  "article",
   headerCart
 );
-headerImg.innerHTML = "article";
 
 const headerName = createElement(
   "h3",
   ["col-2", "text-center", "orinoco-font"],
   [{}],
+  "nom",
   headerCart
 );
-headerName.innerHTML = "nom";
 
 const headerDescription = createElement(
   "h3",
   ["col-4", "text-center", "orinoco-font"],
   [{}],
+  "description",
   headerCart
 );
-headerDescription.innerHTML = "description";
 
 const headerQuantity = createElement(
   "h3",
   ["col-1", "text-center", "orinoco-font"],
   [{}],
+  "quantite",
   headerCart
 );
-headerQuantity.innerHTML = "quantite";
 
 const headerPrice = createElement(
   "h3",
   ["col-1", "text-center", "orinoco-font"],
   [{}],
+  "prix",
   headerCart
 );
-headerPrice.innerHTML = "prix";
 
 if (localCart && localCart.length > 0) {
   // et pour chacun de ses éléments, on construit notre panier :
@@ -104,6 +106,7 @@ if (localCart && localCart.length > 0) {
       "div",
       ["row", "align-items-center", "cart"],
       [{ id: "cart" }],
+      "",
       containerCart
     );
 
@@ -115,6 +118,7 @@ if (localCart && localCart.length > 0) {
         { alt: teddy.name },
         { style: "max-height : 150px" }
       ],
+      "",
       cart
     );
 
@@ -122,35 +126,41 @@ if (localCart && localCart.length > 0) {
       "h2",
       ["col-2", "text-center", "orinoco-font"],
       [{}],
+      teddy.name,
       cart
     );
-    name.innerText = teddy.name;
 
     const description = createElement(
       "p",
       ["col-4", "text-center"],
       [{}],
+      teddy.description,
       cart
     );
-    description.innerText = teddy.description;
 
-    const containerQuantity = createElement("div", ["col-1"], [{}], cart);
+    const containerQuantity = createElement("div", ["col-1"], [{}], "", cart);
 
-    const quantity = createElement("p", [], [{}], containerQuantity);
-    quantity.innerText = `${teddy.quantity} `;
+    const quantity = createElement(
+      "p",
+      [],
+      [{}],
+      teddy.quantity,
+      containerQuantity
+    );
 
     const price = createElement(
       "h5",
       ["orinoco-font", "col-1", "text-center"],
       [{}],
+      `${teddyPriceQuantity} €`,
       cart
     );
-    price.innerText = `${teddyPriceQuantity} €`;
 
     const containerButtonSubToCart = createElement(
       "div",
       ["col-2", "text-center"],
       [{}],
+      "",
       cart
     );
 
@@ -158,9 +168,9 @@ if (localCart && localCart.length > 0) {
       "button",
       ["btn", "btn-outline-dark", "orinoco-font", "text-center"],
       [{ type: "button" }],
+      "RETIRER",
       containerButtonSubToCart
     );
-    buttonSubToCart.innerText = "RETIRER";
 
     // bouton subToCart
     buttonSubToCart.addEventListener("click", () => {
@@ -190,14 +200,15 @@ if (localCart && localCart.length > 0) {
           "p",
           ["col-12", "orinoco-font", "bold", "text-center", "empty-cart"],
           [{}],
+          "votre panier est vide",
           body
         );
-        emptyCart.innerText = "votre panier est vide";
 
         const linkToHome = createElement(
           "a",
           ["link-to-home"],
           [{ href: "index.html" }],
+          "",
           containerCart
         );
 
@@ -205,6 +216,7 @@ if (localCart && localCart.length > 0) {
           "div",
           ["container-button-home"],
           [{}],
+          "",
           linkToHome
         );
 
@@ -212,9 +224,9 @@ if (localCart && localCart.length > 0) {
           "button",
           ["btn", "btn-outline-dark", "orinoco-font", "bold", "center-text"],
           [{}],
+          "acceuil",
           containerButtonToHome
         );
-        buttonToHome.innerHTML = "<h3>acceuil</h3>";
       }
 
       articleNumberText -= 1;
@@ -226,31 +238,39 @@ if (localCart && localCart.length > 0) {
     "div",
     ["row", "container-total-price"],
     [{}],
+    "",
     containerCart
   );
 
-  const emptyPrice = createElement("div", ["col-8"], [{}], containerTotalPrice);
+  const emptyPrice = createElement(
+    "div",
+    ["col-8"],
+    [{}],
+    "",
+    containerTotalPrice
+  );
 
   const total = createElement(
     "h5",
     ["col-1", "orinoco-font", "bold"],
     [{}],
+    "TOTAL",
     containerTotalPrice
   );
-  total.innerText = "TOTAL";
 
   const totalPriceText = createElement(
     "h5",
     ["col-1", "total-price", "orinoco-font", "text-center", "bold"],
     [{}],
+    `${totalPrice} €`,
     containerTotalPrice
   );
-  totalPriceText.innerText = `${totalPrice} €`;
 
   const containerButtonToConfirm = createElement(
     "div",
     ["col-2", "text-center"],
     [{}],
+    "",
     containerTotalPrice
   );
 
@@ -258,9 +278,9 @@ if (localCart && localCart.length > 0) {
     "button",
     ["btn", "btn-outline-dark", "orinoco-font", "bold", "btn-confirm"],
     [{}],
+    "CONFIRMER",
     containerButtonToConfirm
   );
-  buttonToConfirm.innerText = "CONFIRMER";
 
   buttonToConfirm.addEventListener("click", () => {
     const form = document.getElementById("form");
@@ -271,18 +291,19 @@ if (localCart && localCart.length > 0) {
     "div",
     ["row", "clear-cart"],
     [{}],
+    "",
     containerCart
   );
 
-  const emptyClear = createElement("div", ["col-5"], [{}], clearCart);
+  const emptyClear = createElement("div", ["col-5"], [{}], "", clearCart);
 
   const buttonClearCart = createElement(
     "button",
     ["btn", "btn-outline-dark", "orinoco-font", "bold", "btn-clear", "col-2"],
     [{}],
+    "VIDER LE PANIER",
     clearCart
   );
-  buttonClearCart.innerText = "VIDER LE PANIER";
 
   buttonClearCart.addEventListener("click", () => {
     let localCart = [];
@@ -300,14 +321,15 @@ if (localCart && localCart.length > 0) {
       "p",
       ["col-12", "orinoco-font", "bold", "text-center", "empty-cart"],
       [{}],
+      "votre panier est vide",
       body
     );
-    emptyCart.innerText = "votre panier est vide";
 
     const linkToHome = createElement(
       "a",
       ["link-to-home"],
       [{ href: "index.html" }],
+      "",
       containerCart
     );
 
@@ -315,6 +337,7 @@ if (localCart && localCart.length > 0) {
       "div",
       ["container-button-home"],
       [{}],
+      "",
       linkToHome
     );
 
@@ -322,9 +345,9 @@ if (localCart && localCart.length > 0) {
       "button",
       ["btn", "btn-outline-dark", "orinoco-font", "bold", "center-text"],
       [{}],
+      "acceuil",
       containerButtonToHome
     );
-    buttonToHome.innerHTML = "<h3>acceuil</h3>";
   });
 } else {
   const body = document.getElementById("container-cart");
@@ -333,14 +356,15 @@ if (localCart && localCart.length > 0) {
     "p",
     ["col-12", "orinoco-font", "bold", "text-center", "empty-cart"],
     [{}],
+    "votre panier est vide",
     body
   );
-  emptyCart.innerText = "votre panier est vide";
 
   const linkToHome = createElement(
     "a",
     ["link-to-home"],
     [{ href: "index.html" }],
+    "",
     containerCart
   );
 
@@ -348,6 +372,7 @@ if (localCart && localCart.length > 0) {
     "div",
     ["container-button-home"],
     [{}],
+    "",
     linkToHome
   );
 
@@ -355,9 +380,9 @@ if (localCart && localCart.length > 0) {
     "button",
     ["btn", "btn-outline-dark", "orinoco-font", "bold", "center-text"],
     [{}],
+    "acceuil",
     containerButtonToHome
   );
-  buttonToHome.innerHTML = "<h3>acceuil</h3>";
 
   articleNumberText = 0;
   articleNumber.innerText = articleNumberText;

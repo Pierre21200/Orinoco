@@ -16,7 +16,7 @@ const headerArticleNumber = () => {
 };
 
 // fonction de création d'élément : à revoir cependant !
-const createElement = (element, classes, attributes, parent) => {
+const createElement = (element, classes, attributes, text, parent) => {
   const el = document.createElement(element);
   classes.forEach(clas => {
     el.classList.add(clas);
@@ -26,6 +26,7 @@ const createElement = (element, classes, attributes, parent) => {
       el.setAttribute(key, att[key]);
     }
   });
+  el.innerText = text;
   parent.appendChild(el);
   return el;
 };

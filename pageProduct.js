@@ -6,7 +6,7 @@ let articleNumberText = 0;
 let localCart = JSON.parse(localStorage.getItem("cart"));
 
 // fonctions
-const createElement = (element, classes, attributes, parent) => {
+const createElement = (element, classes, attributes, text, parent) => {
   const el = document.createElement(element);
   classes.forEach(clas => {
     el.classList.add(clas);
@@ -16,6 +16,7 @@ const createElement = (element, classes, attributes, parent) => {
       el.setAttribute(key, att[key]);
     }
   });
+  el.innerText = text;
   parent.appendChild(el);
   return el;
 };
@@ -47,6 +48,7 @@ const getOneTeddy = () => {
         "div",
         ["row", "align-items-center", "product-list"],
         [{}],
+        "",
         pageProduct
       );
 
@@ -57,6 +59,7 @@ const getOneTeddy = () => {
           { src: teddy.imageUrl },
           { alt: "Photo de l'ours en Peluche " + teddy.name }
         ],
+        "",
         containerProduct
       );
 
@@ -64,6 +67,7 @@ const getOneTeddy = () => {
         "div",
         ["col-6"],
         [{}],
+        "",
         containerProduct
       );
 
@@ -71,25 +75,35 @@ const getOneTeddy = () => {
         "h2",
         ["orinoco-font"],
         [{}],
+        teddy.name,
         listProduct
       );
-      nameProduct.innerText = teddy.name;
 
       const priceProduct = createElement(
         "h5",
         ["orinoco-font"],
         [{}],
+        `${teddy.price} €`,
         listProduct
       );
-      priceProduct.innerText = `${teddy.price} €`;
 
-      const descriptionProduct = createElement("p", [], [{}], listProduct);
-      descriptionProduct.innerText = teddy.description;
+      const descriptionProduct = createElement(
+        "p",
+        [],
+        [{}],
+        teddy.description,
+        listProduct
+      );
 
-      const labelProduct = createElement("label", [], [{}], listProduct);
-      labelProduct.innerText = "Choix de la couleur : ";
+      const labelProduct = createElement(
+        "label",
+        [],
+        [{}],
+        "choix de la couleur :",
+        listProduct
+      );
 
-      const selectProduct = createElement("select", [], [{}], listProduct);
+      const selectProduct = createElement("select", [], [{}], "", listProduct);
 
       teddy.colors.forEach(color => {
         const option = document.createElement("option");
@@ -98,7 +112,7 @@ const getOneTeddy = () => {
         selectProduct.appendChild(option);
       });
 
-      const br = createElement("br", [], [{}], listProduct);
+      const br = createElement("br", [], [{}], "", listProduct);
 
       const buttonAddToCart = createElement(
         "button",
@@ -108,15 +122,16 @@ const getOneTeddy = () => {
           { "data-toggle": "modal" },
           { "data-target": "#addToCart" }
         ],
+        "AJOUTER AU PANIER",
         listProduct
       );
-      buttonAddToCart.innerText = "AJOUTER AU PANIER";
 
       // Modal addtocart
       const modal = createElement(
         "div",
         ["modal", "fade"],
         [{ id: "addToCart" }],
+        "",
         listProduct
       );
 
@@ -124,6 +139,7 @@ const getOneTeddy = () => {
         "div",
         ["modal-dialog", "modal-sm"],
         [{}],
+        "",
         modal
       );
 
@@ -131,21 +147,23 @@ const getOneTeddy = () => {
         "div",
         ["modal-content"],
         [{}],
+        "",
         modalDialog
       );
 
       const modalBody = createElement(
         "div",
-        ["modal-body"],
-        [{}],
+        ["modal-body", "text-center"],
+        [{ style: "font-size : 30px" }],
+        "L'article a bien été ajouté au panier",
         modalContent
       );
-      modalBody.innerHTML = `<h5>L'article a bien été ajouté au panier </h5>`;
 
       const modalFooter = createElement(
         "div",
         ["modal-footer"],
         [{}],
+        "",
         modalContent
       );
 
@@ -153,14 +171,15 @@ const getOneTeddy = () => {
         "button",
         ["button-footer-home", "btn", "btn-outline-dark"],
         [{ "data-dismiss": "modal" }],
+        "Rester",
         modalFooter
       );
-      buttonFooterProduct.innerHTML = `<h6>Rester</h6>`;
 
       const linkHome = createElement(
         "a",
         [],
         [{ href: "index.html" }],
+        "",
         modalFooter
       );
 
@@ -168,14 +187,15 @@ const getOneTeddy = () => {
         "button",
         ["button-footer-home", "btn", "btn-outline-dark"],
         [{}],
+        "Acceuil",
         linkHome
       );
-      buttonFooterHome.innerHTML = `<h6>Acceuil</h6>`;
 
       const linkCart = createElement(
         "a",
         [],
         [{ href: "panier.html" }],
+        "",
         modalFooter
       );
 
@@ -183,9 +203,9 @@ const getOneTeddy = () => {
         "button",
         ["button-footer-cart", "btn", "btn-outline-dark"],
         [{}],
+        "Panier",
         linkCart
       );
-      buttonFooterCart.innerHTML = `<h6>Panier</h6>`;
 
       // on execute la fonction lorsque l'utilisateur clique sur le bouton
       buttonAddToCart.addEventListener("click", () => {
@@ -216,6 +236,7 @@ const getOneTeddy = () => {
         "p",
         ["orinoco-font", "text-center", "bold"],
         [{ style: "font-size : 100px" }, { style: "margin : 50px" }],
+        "",
         products
       );
       errorCatch.innerText =
