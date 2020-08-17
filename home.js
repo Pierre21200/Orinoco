@@ -1,8 +1,5 @@
 // Page d'acceuil
 
-// Ludovic : problème dans la fonction createElement, setAttribute, innerText, peut on mettre une valeur non obligatoire ?
-// difficulté à rajouter un if (response.ok)
-
 // Variables
 let articleNumber = document.getElementById("article-number");
 let articleNumberText = 0;
@@ -224,7 +221,6 @@ const getTeddies = () => {
             localCart = [...localCart, teddy];
             localStorage.setItem("cart", JSON.stringify(localCart));
           }
-
           articleNumberText += 1;
           articleNumber.innerText = articleNumberText;
         });
