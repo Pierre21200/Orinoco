@@ -1,15 +1,9 @@
 // page produit
 
-// on récupère l'URL de notre page actuelle, avec l'id qui nous intéresse, puis on ajoute cette id à l'url de l'API pour pouvoir travailler avec le teddy selectionné
-const params = new URLSearchParams(window.location.search);
-const id = params.get("teddy");
-const url = "http://localhost:3000/api/teddies/" + id;
-
 // variables
 let articleNumber = document.getElementById("article-number");
 let articleNumberText = 0;
 let localCart = JSON.parse(localStorage.getItem("cart"));
-const pageProduct = document.querySelector("#pageProduct");
 
 // fonctions
 const createElement = (element, classes, attributes, parent) => {
@@ -36,8 +30,13 @@ if (localCart && localCart.length > 0) {
   articleNumber.innerText = 0;
 }
 
-// on initie la fonction qui va nous permettre, avec la promesse renvoyée :
+// on récupère l'URL de notre page actuelle, avec l'id qui nous intéresse, puis on ajoute cette id à l'url de l'API pour pouvoir travailler avec le teddy selectionné
+const params = new URLSearchParams(window.location.search);
+const id = params.get("teddy");
+const url = "http://localhost:3000/api/teddies/" + id;
+const pageProduct = document.querySelector("#pageProduct");
 
+// on initie la fonction qui va nous permettre, avec la promesse renvoyée :
 const getOneTeddy = () => {
   fetch(url)
     .then(response => response.json())
@@ -213,9 +212,14 @@ const getOneTeddy = () => {
       });
     })
     .catch(function (error) {
-      console.log(
-        "Il y a eu un problème avec l'opération fetch: " + error.message
+      const errorCatch = createElement(
+        "p",
+        ["orinoco-font", "text-center", "bold"],
+        [{ style: "font-size : 100px" }, { style: "margin : 50px" }],
+        products
       );
+      errorCatch.innerText =
+        "VEUILLEZ NOUS EXCUSER, LE SERVEUR NE REPONDS PAS !";
     });
 };
 

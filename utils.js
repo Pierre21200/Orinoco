@@ -1,13 +1,19 @@
-// afficher nombre d'article dans le panier dans le header
+// Variables
+let articleNumber = document.getElementById("article-number");
+let articleNumberText = 0;
+let localCart = JSON.parse(localStorage.getItem("cart"));
 
-if (localCart && localCart.length > 0) {
-  localCart.forEach(element => {
-    articleNumberText += element.quantity;
-    articleNumber.innerText = articleNumberText;
-  });
-} else {
-  articleNumber.innerText = 0;
-}
+// afficher nombre d'article dans le panier dans le header
+const headerArticleNumber = () => {
+  if (localCart && localCart.length > 0) {
+    localCart.forEach(element => {
+      articleNumberText += element.quantity;
+      articleNumber.innerText = articleNumberText;
+    });
+  } else {
+    articleNumber.innerText = 0;
+  }
+};
 
 // fonction de création d'élément : à revoir cependant !
 const createElement = (element, classes, attributes, parent) => {
@@ -48,19 +54,5 @@ buttonAddToCart.addEventListener("click", () => {
   articleNumber.innerText = articleNumberText;
 });
 
-fetch("flowers.jpg")
-  .then(function (response) {
-    if (response.ok) {
-      response.blob().then(function (myBlob) {
-        var objectURL = URL.createObjectURL(myBlob);
-        myImage.src = objectURL;
-      });
-    } else {
-      console.log("Mauvaise réponse du réseau");
-    }
-  })
-  .catch(function (error) {
-    console.log(
-      "Il y a eu un problème avec l'opération fetch: " + error.message
-    );
-  });
+// emptyCart
+// faire une fonction emptyCart

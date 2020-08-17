@@ -1,13 +1,12 @@
 // Page d'acceuil
 
-// questions pour Ludovic : problème dans la fonction createElement, setAttribute, innerText, peut on mettre une valeur non obligatoire ?
+// Ludovic : problème dans la fonction createElement, setAttribute, innerText, peut on mettre une valeur non obligatoire ?
 // difficulté à rajouter un if (response.ok)
 
 // Variables
 let articleNumber = document.getElementById("article-number");
 let articleNumberText = 0;
 let localCart = JSON.parse(localStorage.getItem("cart"));
-const products = document.querySelector("#product-item");
 
 // Fonctions
 const createElement = (element, classes, attributes, parent) => {
@@ -33,6 +32,8 @@ if (localCart && localCart.length > 0) {
 } else {
   articleNumber.innerText = 0;
 }
+
+const products = document.querySelector("#product-item");
 
 // D'appeller la function getteddies afin de l'executer
 const getTeddies = () => {
@@ -213,9 +214,14 @@ const getTeddies = () => {
       });
     })
     .catch(function (error) {
-      console.log(
-        "Il y a eu un problème avec l'opération fetch: " + error.message
+      const errorCatch = createElement(
+        "p",
+        ["orinoco-font", "text-center", "bold"],
+        [{ style: "font-size : 100px" }, { style: "margin : 50px" }],
+        products
       );
+      errorCatch.innerText =
+        "VEUILLEZ NOUS EXCUSER, LE SERVEUR NE REPONDS PAS !";
     });
 };
 

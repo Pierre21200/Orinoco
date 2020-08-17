@@ -1,8 +1,8 @@
 // variables affichant le nombre d'article
 let articleNumber = document.getElementById("article-number");
 let articleNumberText = 0; // revoir ça, mieux si c'est le bon direct plutot que de le mettre a jour plus bas
-let totalPrice = 0;
 let localCart = JSON.parse(localStorage.getItem("cart"));
+let totalPrice = 0;
 
 //fonction
 const createElement = (element, classes, attributes, parent) => {
@@ -18,6 +18,27 @@ const createElement = (element, classes, attributes, parent) => {
   parent.appendChild(el);
   return el;
 };
+
+const inputOnChange = (input, errorInput) => {
+  input.addEventListener("change", () => {
+    if (isValidName(input.value)) {
+      errorInput.innerText = "";
+    } else {
+      errorInput.innerText = "Veuillez renseigner ce champ !";
+      input.focus();
+    }
+  });
+};
+
+// Header Artcile Number
+if (localCart && localCart.length > 0) {
+  localCart.forEach(element => {
+    articleNumberText += element.quantity;
+    articleNumber.innerText = articleNumberText;
+  });
+} else {
+  articleNumber.innerText = 0;
+}
 
 // on sélectionne la div dans laquelle on va placer nos informations
 const containerCart = document.querySelector("#container-cart");
@@ -55,11 +76,6 @@ const headerDescription = createElement(
 );
 headerDescription.innerHTML = "description";
 
-// const labelHeaderQuantity = document.createElement("label");
-// labelHeaderQuantity.setAttribute("for","quantity");
-// labelHeaderQuantity.classList.add("col-1");
-// headerCart.appendChild(labelHeaderQuantity);
-
 const headerQuantity = createElement(
   "h3",
   ["col-1", "text-center", "orinoco-font"],
@@ -77,11 +93,6 @@ const headerPrice = createElement(
 headerPrice.innerHTML = "prix";
 
 if (localCart && localCart.length > 0) {
-  localCart.forEach(element => {
-    articleNumberText += element.quantity;
-    articleNumber.innerText = articleNumberText;
-  });
-
   // et pour chacun de ses éléments, on construit notre panier :
   localCart.forEach(teddy => {
     let teddyPriceQuantity = teddy.price * teddy.quantity;
@@ -124,17 +135,6 @@ if (localCart && localCart.length > 0) {
     description.innerText = teddy.description;
 
     const containerQuantity = createElement("div", ["col-1"], [{}], cart);
-
-    // const quantity = document.createElement("input");
-    // quantity.setAttribute("style", "text-align : center");
-    // quantity.setAttribute("type", "number");
-    // quantity.setAttribute("name", "quantity");
-    // quantity.setAttribute("value", teddy.quantity);
-    // quantity.setAttribute("min", "0");
-    // quantity.setAttribute("max", "99");
-    // quantity.setAttribute("step", "1");
-    // quantity.setAttribute("size", "1");
-    // containerQuantity.appendChild(quantity);
 
     const quantity = createElement("p", [], [{}], containerQuantity);
     quantity.innerText = `${teddy.quantity} `;
@@ -363,123 +363,219 @@ if (localCart && localCart.length > 0) {
   articleNumber.innerText = articleNumberText;
 }
 
-// Qui récupère les données du local storage avec getCart, le tableau localCart
+//input onchange
+const firstName = document.getElementById("firstName");
+const lastName = document.getElementById("lastName");
+const address = document.getElementById("address");
+const city = document.getElementById("city");
+const email = document.getElementById("email");
 
+const errorFirstName = document.getElementById("error-firstName");
+const errorLastName = document.getElementById("error-lastName");
+const errorAddress = document.getElementById("error-address");
+const errorCity = document.getElementById("error-city");
+const errorEmail = document.getElementById("error-email");
+
+const isNotEmpty = value => (value !== "" ? true : false);
+
+const containNumber = /[0-9]/;
+const doNotContainNumber = value =>
+  !value.match(containNumber) ? true : false;
+
+const specialCharacter = /^[!@#$%^&*(),.'-_§?":;{}|<>]+$/;
+const doNotContainSpecialCharacter = value =>
+  !value.match(specialCharacter) ? true : false;
+
+const regexMail = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/;
+const isValidEmail = value => (!value.match(regexMail) ? true : false);
+
+const regexAddress = /([0-9]*) ?([a-zA-Z,\. ]*) ?([0-9]{5}) ?([a-zA-Z]*)/;
+const isValidAddress = value => (!value.match(regexAddress) ? true : false);
+
+const regexCity = /^[[:alpha:]]([-' ]?[[:alpha:]])*$/;
+const isValidCity = value => (!value.match(regexCity) ? true : false);
+
+const isValidName = value =>
+  isNotEmpty(value) &&
+  doNotContainNumber(value) &&
+  doNotContainSpecialCharacter(value);
+
+const firstNameOnChange = inputOnChange(firstName, errorFirstName);
+
+const lastNameOnChange = inputOnChange(lastName, errorLastName);
+
+address.addEventListener("change", () => {
+  if (isValidAddress(address.value) && isNotEmpty(address.value)) {
+    errorAddress.innerText = "";
+  } else {
+    errorAddress.innerText = "Veuillez renseigner votre adresse postale";
+    address.focus();
+  }
+});
+
+city.addEventListener("change", () => {
+  if (isValidName(city.value) && isValidCity(city.value)) {
+    errorCity.innerText = "";
+  } else {
+    errorCity.innerText = "Veuillez renseigner votre ville";
+    city.focus();
+  }
+});
+
+email.addEventListener("change", () => {
+  if (isNotEmpty(email.value)) {
+    errorEmail.innerText = "";
+  } else {
+    errorEmail.innerText = "Veuillez renseigner votre adesse mail";
+    email.focus();
+  }
+});
+
+// Qui récupère les données du local storage avec getCart, le tableau localCart
 const buttonSubmit = document.getElementById("submit");
 
-// on peut faire ça mieux avec target si j'ai bien compris
 buttonSubmit.addEventListener("click", () => {
   event.preventDefault();
 
-  const firstName = document.getElementById("firstName");
-  const lastName = document.getElementById("lastName");
-  const address = document.getElementById("address");
-  const city = document.getElementById("city");
-  const email = document.getElementById("email");
-
-  const errorFirstName = document.getElementById("error-firstName");
-  const errorLastName = document.getElementById("error-lastName");
-  const errorAddress = document.getElementById("error-address");
-  const errorCity = document.getElementById("error-city");
-  const errorEmail = document.getElementById("error-email");
-
-  const isNotEmpty = value => (value !== "" ? true : false);
-
-  const containNumber = /[0-9]/;
-  const doNotContainNumber = value =>
-    !value.match(containNumber) ? true : false;
-
-  const specialCharacter = /^[!@#$%^&*(),.'-_§?":{}|<>]+$/;
-  const doNotContainSpecialCharacter = value =>
-    !value.match(specialCharacter) ? true : false;
-
-  const regexMail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  const isValidEmail = value => (!value.match(regexMail) ? true : false);
-
-  const regexAddress = /([0-9]*) ?([a-zA-Z,\. ]*) ?([0-9]{5}) ?([a-zA-Z]*)/;
-  const isValidAddress = value => (!value.match(regexAddress) ? true : false);
-
-  const isValidName = value =>
-    isNotEmpty(value) &&
-    doNotContainNumber(value) &&
-    doNotContainSpecialCharacter(value);
-
-  const formValidate = () => {
-    if (isValidName(firstName.value)) {
-      errorFirstName.innerText = "";
-    } else {
-      errorFirstName.innerText = "Veuillez renseigner votre prénom";
-      firstName.focus();
-      return false;
-    }
-
-    if (isValidName(lastName.value)) {
-      errorLastName.innerText = "";
-    } else {
-      errorLastName.innerText = "Veuillez renseigner votre nom";
-      lastName.focus();
-
-      return false;
-    }
-
-    if (isValidAddress(address.value) && isNotEmpty(address.value)) {
-      errorAddress.innerText = "";
-    } else {
-      errorAddress.innerText = "Veuillez renseigner votre adresse postale";
-      address.focus();
-      return false;
-    }
-
-    if (isValidName(city.value)) {
-      errorCity.innerText = "";
-    } else {
-      errorCity.innerText = "Veuillez renseigner votre ville";
-      city.focus();
-
-      return false;
-    }
-
-    if (isNotEmpty(email.value)) {
-      errorEmail.innerText = "";
-    } else {
-      errorEmail.innerText = "Veuillez renseigner votre adesse mail";
-      email.focus();
-      return false;
-    }
-
-    let contact = {
-      firstName: firstName.value,
-      lastName: lastName.value,
-      address: address.value,
-      city: city.value,
-      email: email.value
-    };
-
-    const cartInformation = {
-      products: localCart,
-      contact
-    };
-
-    localStorage.setItem("totalPrice", totalPrice);
-
-    const postToApi = () =>
-      fetch("http://localhost:3000/api/localCart/order", {
-        headers: {
-          "Content-type": "application/json"
-        },
-        "Access-Control-Allow-Origin": "*",
-        method: "POST",
-        body: JSON.stringify(cartInformation)
-      })
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          localStorage.setItem("data", JSON.stringify(data));
-          window.location = `checkout.html`;
-        });
-
-    postToApi();
+  let contact = {
+    firstName: firstName.value,
+    lastName: lastName.value,
+    address: address.value,
+    city: city.value,
+    email: email.value
   };
-  formValidate();
+
+  const cartInformation = {
+    products: localCart,
+    contact
+  };
+
+  localStorage.setItem("totalPrice", totalPrice);
+
+  const postToApi = () =>
+    fetch("http://localhost:3000/api/localCart/order", {
+      headers: {
+        "Content-type": "application/json"
+      },
+
+      method: "POST",
+      body: JSON.stringify(cartInformation)
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        localStorage.setItem("data", JSON.stringify(data));
+        window.location = `checkout.html`;
+      })
+      .catch(function (error) {
+        const errorCatch = createElement(
+          "p",
+          ["orinoco-font", "text-center", "bold"],
+          [{ style: "font-size : 100px" }, { style: "margin : 50px" }],
+          products
+        );
+        errorCatch.innerText =
+          "VEUILLEZ NOUS EXCUSER, LE SERVEUR NE REPONDS PAS !";
+      });
+
+  postToApi();
 });
+
+// on peut faire ça mieux avec target si j'ai bien compris
+// buttonSubmit.addEventListener("click", () => {
+//   event.preventDefault();
+
+//   const isNotEmpty = value => (value !== "" ? true : false);
+
+//   const containNumber = /[0-9]/;
+//   const doNotContainNumber = value =>
+//     !value.match(containNumber) ? true : false;
+
+//   const specialCharacter = /^[!@#$%^&*(),.'-_§?":{}|<>]+$/;
+//   const doNotContainSpecialCharacter = value =>
+//     !value.match(specialCharacter) ? true : false;
+
+//   const regexMail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+//   const isValidEmail = value => (!value.match(regexMail) ? true : false);
+
+//   const regexAddress = /([0-9]*) ?([a-zA-Z,\. ]*) ?([0-9]{5}) ?([a-zA-Z]*)/;
+//   const isValidAddress = value => (!value.match(regexAddress) ? true : false);
+
+//   const isValidName = value =>
+//     isNotEmpty(value) &&
+//     doNotContainNumber(value) &&
+//     doNotContainSpecialCharacter(value);
+
+//   const formValidate = () => {
+//     if (isValidName(firstName.value)) {
+//       errorFirstName.innerText = "";
+//     } else {
+//       errorFirstName.innerText = "Veuillez renseigner votre prénom";
+//       firstName.focus();
+//     }
+
+//     if (isValidName(lastName.value)) {
+//       errorLastName.innerText = "";
+//     } else {
+//       errorLastName.innerText = "Veuillez renseigner votre nom";
+//       lastName.focus();
+//     }
+
+//     if (isValidAddress(address.value) && isNotEmpty(address.value)) {
+//       errorAddress.innerText = "";
+//     } else {
+//       errorAddress.innerText = "Veuillez renseigner votre adresse postale";
+//       address.focus();
+//     }
+
+//     if (isValidName(city.value)) {
+//       errorCity.innerText = "";
+//     } else {
+//       errorCity.innerText = "Veuillez renseigner votre ville";
+//       city.focus();
+//     }
+
+//     if (isNotEmpty(email.value)) {
+//       errorEmail.innerText = "";
+//     } else {
+//       errorEmail.innerText = "Veuillez renseigner votre adesse mail";
+//       email.focus();
+//     }
+
+//     let contact = {
+//       firstName: firstName.value,
+//       lastName: lastName.value,
+//       address: address.value,
+//       city: city.value,
+//       email: email.value
+//     };
+
+//     const cartInformation = {
+//       products: localCart,
+//       contact
+//     };
+
+//     localStorage.setItem("totalPrice", totalPrice);
+
+//     const postToApi = () =>
+//       fetch("http://localhost:3000/api/localCart/order", {
+//         headers: {
+//           "Content-type": "application/json"
+//         },
+
+//         method: "POST",
+//         body: JSON.stringify(cartInformation)
+//       })
+//         .then(function (response) {
+//           return response.json();
+//         })
+//         .then(function (data) {
+//           localStorage.setItem("data", JSON.stringify(data));
+//           window.location = `checkout.html`;
+//         });
+
+//     postToApi();
+//   };
+//   formValidate();
+// });
