@@ -40,6 +40,8 @@ const getTeddies = () => {
     .then(teddies => {
       // On itere sur le tableau de teddies, pour chaque élément du tableau on va :
       teddies.forEach(teddy => {
+        teddy.price /= 100;
+
         // Créer la div principale de l'élément qui contiendra tous les sous elements
         const card = createElement(
           "div",

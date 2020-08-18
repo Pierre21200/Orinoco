@@ -389,6 +389,7 @@ if (localCart && localCart.length > 0) {
 }
 
 //input onchange
+//
 const firstName = document.getElementById("firstName");
 const lastName = document.getElementById("lastName");
 const address = document.getElementById("address");
@@ -411,7 +412,7 @@ const specialCharacter = /^[!@#$%^&*(),.'-_§?":;{}|<>]+$/;
 const doNotContainSpecialCharacter = value =>
   !value.match(specialCharacter) ? true : false;
 
-const regexMail = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/;
+const regexMail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const isValidEmail = value => (!value.match(regexMail) ? true : false);
 
 const regexAddress = /([0-9]*) ?([a-zA-Z,\. ]*) ?([0-9]{5}) ?([a-zA-Z]*)/;
@@ -448,7 +449,7 @@ city.addEventListener("change", () => {
 });
 
 email.addEventListener("change", () => {
-  if (isNotEmpty(email.value)) {
+  if (isValidEmail(email.value) && isNotEmpty(email.value)) {
     errorEmail.innerText = "";
   } else {
     errorEmail.innerText = "Veuillez renseigner votre adesse mail";
@@ -477,34 +478,30 @@ buttonSubmit.addEventListener("click", () => {
 
   localStorage.setItem("totalPrice", totalPrice);
 
-  const postToApi = () =>
-    fetch("http://localhost:3000/api/localCart/order", {
-      headers: {
-        "Content-type": "application/json"
-      },
-
-      method: "POST",
-      body: JSON.stringify(cartInformation)
+  fetch("http://localhost:3000/api/localCart/order", {
+    headers: {
+      "Content-type": "application/json"
+    },
+    method: "POST",
+    body: JSON.stringify(cartInformation)
+  })
+    .then(function (response) {
+      return response.json();
     })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        localStorage.setItem("data", JSON.stringify(data));
-        window.location = `checkout.html`;
-      })
-      .catch(function (error) {
-        const errorCatch = createElement(
-          "p",
-          ["orinoco-font", "text-center", "bold"],
-          [{ style: "font-size : 100px" }, { style: "margin : 50px" }],
-          products
-        );
-        errorCatch.innerText =
-          "VEUILLEZ NOUS EXCUSER, LE SERVEUR NE REPONDS PAS !";
-      });
-
-  postToApi();
+    .then(function (data) {
+      localStorage.setItem("data", JSON.stringify(data));
+      window.location = `checkout.html`;
+    })
+    .catch(function (error) {
+      const errorCatch = createElement(
+        "p",
+        ["orinoco-font", "text-center", "bold"],
+        [{ style: "font-size : 100px" }, { style: "margin : 50px" }],
+        products
+      );
+      errorCatch.innerText =
+        "VEUILLEZ NOUS EXCUSER, LE SERVEUR NE REPONDS PAS !";
+    });
 });
 
 // on peut faire ça mieux avec target si j'ai bien compris

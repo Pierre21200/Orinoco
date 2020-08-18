@@ -42,6 +42,7 @@ const getOneTeddy = () => {
   fetch(url)
     .then(response => response.json())
     .then(teddy => {
+      teddy.price /= 100;
       // Puis création de tout les éléments, en intégrant les infos tirées de l'API
 
       const containerProduct = createElement(
