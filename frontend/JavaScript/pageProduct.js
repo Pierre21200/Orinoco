@@ -179,7 +179,7 @@ const getOneTeddy = () => {
       const linkHome = createElement(
         "a",
         [],
-        [{ href: "index.html" }],
+        [{ href: "../../index.html" }],
         "",
         modalFooter
       );
@@ -195,7 +195,7 @@ const getOneTeddy = () => {
       const linkCart = createElement(
         "a",
         [],
-        [{ href: "panier.html" }],
+        [{ href: "../HTML/panier.html" }],
         "",
         modalFooter
       );
@@ -238,7 +238,7 @@ const getOneTeddy = () => {
         ["orinoco-font", "text-center", "bold"],
         [{ style: "font-size : 100px" }, { style: "margin : 50px" }],
         "",
-        products
+        pageProduct
       );
       errorCatch.innerText =
         "VEUILLEZ NOUS EXCUSER, LE SERVEUR NE REPONDS PAS !";

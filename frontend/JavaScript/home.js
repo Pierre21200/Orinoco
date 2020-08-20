@@ -40,6 +40,7 @@ const getTeddies = () => {
     .then(teddies => {
       // On itere sur le tableau de teddies, pour chaque élément du tableau on va :
       teddies.forEach(teddy => {
+        // On divise le prix des teddies par 100
         teddy.price /= 100;
 
         // Créer la div principale de l'élément qui contiendra tous les sous elements
@@ -112,7 +113,7 @@ const getTeddies = () => {
         const linkProduct = createElement(
           "a",
           [],
-          [{ href: `page-produit.html?teddy=${teddy._id}` }],
+          [{ href: `frontend/HTML/page-produit.html?teddy=${teddy._id}` }],
           "",
           containerDetails
         );
@@ -191,7 +192,7 @@ const getTeddies = () => {
         const linkCart = createElement(
           "a",
           [],
-          [{ href: "panier.html" }],
+          [{ href: "frontend/HTML/panier.html" }],
           "",
           modalFooter
         );

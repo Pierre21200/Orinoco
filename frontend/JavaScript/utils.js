@@ -55,5 +55,10 @@ buttonAddToCart.addEventListener("click", () => {
   articleNumber.innerText = articleNumberText;
 });
 
-// emptyCart
-// faire une fonction emptyCart
+// fonction addeventlistener
+
+const eventListener = (button, page) => {
+  button.addEventListener("click", () => {
+    window.location = `${page}.html`;
+  });
+};

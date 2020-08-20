@@ -14,7 +14,7 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="orinoco.css" />
+    <link rel="stylesheet" href="../CSS/orinoco.css" />
     <script
       src="https://kit.fontawesome.com/b3ea1b0c27.js"
       crossorigin="anonymous"
@@ -25,7 +25,7 @@
       <!-- Modifier police titre et couleur panier-->
       <div class="col-12 title">
         <h1 class="orinoco-font">
-          <a href="index.html">orinoco's bear</a>
+          <a href="../../index.html">orinoco's bear</a>
         </h1>
       </div>
       <a href="panier.html">
@@ -41,6 +41,7 @@
     <div id="container-cart"></div>
 
     <div id="form">
+      <h3 class="orinoco-font text-center">formulaire de contact</h3>
       <form class="text-center" method="" action="" post>
         <!-- on recommande post-->
 
@@ -52,7 +53,7 @@
 
         <div class="row text-center">
           <div class="col-5"></div>
-          <span id="error-firstName"></span>
+          <span id="error-firstName" class="error orinoco-font"></span>
         </div>
 
         <div class="row text-center row-form">
@@ -64,7 +65,7 @@
         <div class="row text-center">
           <div class="col-5"></div>
 
-          <span id="error-lastName"></span>
+          <span id="error-lastName" class="error orinoco-font"></span>
         </div>
 
         <div class="row text-center row-form">
@@ -75,7 +76,7 @@
 
         <div class="row text-center">
           <div class="col-5"></div>
-          <span id="error-address"></span>
+          <span id="error-address" class="error orinoco-font"></span>
         </div>
 
         <div class="row text-center row-form">
@@ -86,7 +87,7 @@
 
         <div class="row text-center">
           <div class="col-5"></div>
-          <span id="error-city"></span>
+          <span id="error-city" class="error orinoco-font"></span>
         </div>
 
         <div class="row text-center row-form">
@@ -97,12 +98,21 @@
 
         <div class="row text-center">
           <div class="col-5"></div>
-          <span id="error-email"></span>
+          <span id="error-email" class="error orinoco-font"></span>
         </div>
 
-        <button id="submit">ENVOYER</button>
+        <button
+          id="submit"
+          class="btn btn-outline-dark orinoco-font text-center bold"
+        >
+          ENVOYER
+        </button>
         <!-- <input  class="orinoco-font col-3" type="" name="" value="ENVOYER" id="submit"> -->
       </form>
+    </div>
+
+    <div class="align-items-center">
+      <h3 id="error-catch-form" class="orinoco-font text-center"></h3>
     </div>
 
     <footer>
@@ -117,7 +127,7 @@
       </div>
     </footer>
 
-    <script src="panier.js"></script>
+    <script src="../JavaScript/panier.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
