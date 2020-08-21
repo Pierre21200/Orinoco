@@ -62,3 +62,44 @@ const eventListener = (button, page) => {
     window.location = `${page}.html`;
   });
 };
+
+//fonction emptyCart
+const emptyCart = () => {
+  localCart = [];
+  localStorage.setItem("cart", JSON.stringify(localCart));
+
+  form.setAttribute("style", "display : none");
+  const body = document.getElementById("container-cart");
+
+  const emptyCart = createElement(
+    "p",
+    ["col-12", "orinoco-font", "bold", "text-center", "empty-cart"],
+    [{}],
+    "votre panier est vide",
+    body
+  );
+
+  const linkToHome = createElement(
+    "a",
+    ["link-to-home"],
+    [{ href: "../../index.html" }],
+    "",
+    containerCart
+  );
+
+  const containerButtonToHome = createElement(
+    "div",
+    ["container-button-home"],
+    [{}],
+    "",
+    linkToHome
+  );
+
+  const buttonToHome = createElement(
+    "button",
+    ["btn", "btn-outline-dark", "orinoco-font", "bold", "center-text"],
+    [{ style: "font-size : 25px" }],
+    "acceuil",
+    containerButtonToHome
+  );
+};

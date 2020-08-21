@@ -3,6 +3,7 @@ let articleNumber = document.getElementById("article-number");
 let articleNumberText = 0; // revoir ça, mieux si c'est le bon direct plutot que de le mettre a jour plus bas
 let localCart = JSON.parse(localStorage.getItem("cart"));
 let totalPrice = 0;
+
 //fonction
 const createElement = (element, classes, attributes, text, parent) => {
   const el = document.createElement(element);
@@ -17,6 +18,47 @@ const createElement = (element, classes, attributes, text, parent) => {
   el.innerText = text;
   parent.appendChild(el);
   return el;
+};
+
+const emptyCart = () => {
+  localCart = [];
+  localStorage.setItem("cart", JSON.stringify(localCart));
+  articleNumberText = 0;
+  articleNumber.innerText = articleNumberText;
+  form.setAttribute("style", "display : none");
+  const body = document.getElementById("container-cart");
+
+  const emptyCart = createElement(
+    "p",
+    ["col-12", "orinoco-font", "bold", "text-center", "empty-cart"],
+    [{}],
+    "votre panier est vide",
+    body
+  );
+
+  const linkToHome = createElement(
+    "a",
+    ["link-to-home"],
+    [{ href: "../../index.html" }],
+    "",
+    containerCart
+  );
+
+  const containerButtonToHome = createElement(
+    "div",
+    ["container-button-home"],
+    [{}],
+    "",
+    linkToHome
+  );
+
+  const buttonToHome = createElement(
+    "button",
+    ["btn", "btn-outline-dark", "orinoco-font", "bold", "center-text"],
+    [{ style: "font-size : 25px" }],
+    "acceuil",
+    containerButtonToHome
+  );
 };
 
 // Header Artcile Number
@@ -99,35 +141,69 @@ if (localCart && localCart.length > 0) {
       containerCart
     );
 
+    const ImgEmpty = createElement(
+      "div",
+      ["col-2", "img-empty"],
+      [{}],
+      "",
+      cart
+    );
+
     const img = createElement(
       "img",
-      ["col-2", "text-center"],
-      [
-        { src: teddy.imageUrl },
-        { alt: teddy.name },
-        { style: "max-height : 150px" }
-      ],
+      ["col-lg-2", "col-8", "container-img"],
+      [{ src: teddy.imageUrl }, { alt: teddy.name }],
       "",
       cart
     );
 
     const name = createElement(
       "h2",
-      ["col-2", "text-center", "orinoco-font"],
+      ["col-lg-2", "col-12", "text-center", "orinoco-font"],
       [{}],
       teddy.name,
       cart
     );
 
+    const spanDescription = createElement(
+      "span",
+      ["orinoco-font", "bold", "span", "col-12", "text-center"],
+      [{}],
+      "description :",
+      cart
+    );
+
+    const Emptydescription = createElement(
+      "div",
+      ["description-empty", "col-3"],
+      [{}],
+      "",
+      cart
+    );
+
     const description = createElement(
       "p",
-      ["col-4", "text-center"],
+      ["col-lg-4", "col-6", "text-center"],
       [{}],
       teddy.description,
       cart
     );
 
-    const containerQuantity = createElement("div", ["col-1"], [{}], "", cart);
+    const containerQuantity = createElement(
+      "div",
+      ["col-lg-1", "col-12", "text-center"],
+      [{}],
+      "",
+      cart
+    );
+
+    const spanQuantity = createElement(
+      "span",
+      ["orinoco-font", "bold", "span"],
+      [{}],
+      "quantite :",
+      containerQuantity
+    );
 
     const quantity = createElement(
       "p",
@@ -137,9 +213,17 @@ if (localCart && localCart.length > 0) {
       containerQuantity
     );
 
+    const spanPrice = createElement(
+      "span",
+      ["orinoco-font", "bold", "span", "col-12", "text-center"],
+      [{}],
+      "prix :",
+      cart
+    );
+
     const price = createElement(
       "h5",
-      ["orinoco-font", "col-1", "text-center"],
+      ["orinoco-font", "col-lg-1", "col-12", "text-center"],
       [{}],
       `${teddyPriceQuantity} €`,
       cart
@@ -147,7 +231,7 @@ if (localCart && localCart.length > 0) {
 
     const containerButtonSubToCart = createElement(
       "div",
-      ["col-2", "text-center"],
+      ["col-lg-2", "col-12", "text-center", "container-sub"],
       [{}],
       "",
       cart
@@ -163,6 +247,8 @@ if (localCart && localCart.length > 0) {
 
     // bouton subToCart
     buttonSubToCart.addEventListener("click", () => {
+      articleNumberText -= 1;
+      articleNumber.innerText = articleNumberText;
       if (teddy.quantity > 1) {
         teddy.quantity -= 1;
         localStorage.setItem("cart", JSON.stringify(localCart));
@@ -172,6 +258,7 @@ if (localCart && localCart.length > 0) {
         totalPrice -= teddy.price;
         totalPriceText.innerText = `${totalPrice} €`;
       } else {
+        console.log("pk");
         localCart = localCart.filter(element => element._id != teddy._id);
         localStorage.setItem("cart", JSON.stringify(localCart));
         containerCart.removeChild(cart);
@@ -180,54 +267,17 @@ if (localCart && localCart.length > 0) {
       }
 
       if (localCart.length === 0) {
+        console.log("pk");
+        emptyCart();
         containerCart.removeChild(containerTotalPrice);
         containerCart.removeChild(clearCart);
-
-        const body = document.getElementById("container-cart");
-
-        const emptyCart = createElement(
-          "p",
-          ["col-12", "orinoco-font", "bold", "text-center", "empty-cart"],
-          [{}],
-          "votre panier est vide",
-          body
-        );
-
-        const linkToHome = createElement(
-          "a",
-          ["link-to-home"],
-          [{ href: "../../index.html" }],
-          "",
-          containerCart
-        );
-
-        const containerButtonToHome = createElement(
-          "div",
-          ["container-button-home"],
-          [{}],
-          "",
-          linkToHome
-        );
-
-        const buttonToHome = createElement(
-          "button",
-          ["btn", "btn-outline-dark", "orinoco-font", "bold", "center-text"],
-          [{ style: "font-size : 25px" }],
-          "acceuil",
-          containerButtonToHome
-        );
-
-        // enlever le formulaire !!!
       }
-
-      articleNumberText -= 1;
-      articleNumber.innerText = articleNumberText;
     });
   });
 
   const containerTotalPrice = createElement(
     "div",
-    ["row", "container-total-price"],
+    ["row", "container-total-price", "align-items-center"],
     [{}],
     "",
     containerCart
@@ -235,7 +285,7 @@ if (localCart && localCart.length > 0) {
 
   const emptyPrice = createElement(
     "div",
-    ["col-8"],
+    ["col-lg-7"],
     [{}],
     "",
     containerTotalPrice
@@ -243,15 +293,15 @@ if (localCart && localCart.length > 0) {
 
   const total = createElement(
     "h5",
-    ["col-1", "orinoco-font", "bold"],
+    ["col-lg-2", "orinoco-font", "bold", "text-center", "total"],
     [{}],
-    "TOTAL",
+    "TOTAL :",
     containerTotalPrice
   );
 
   const totalPriceText = createElement(
     "h5",
-    ["col-1", "total-price", "orinoco-font", "text-center", "bold"],
+    ["col-lg-1", "total", "orinoco-font", "text-center", "bold"],
     [{}],
     `${totalPrice} €`,
     containerTotalPrice
@@ -259,7 +309,7 @@ if (localCart && localCart.length > 0) {
 
   const containerButtonToConfirm = createElement(
     "div",
-    ["col-2", "text-center"],
+    ["col-lg-2", "text-center"],
     [{}],
     "",
     containerTotalPrice
@@ -276,7 +326,7 @@ if (localCart && localCart.length > 0) {
   buttonToConfirm.addEventListener("click", () => {
     const form = document.getElementById("form");
     form.setAttribute("style", "display : block");
-    window.scrollTo(0, 500);
+    window.scrollTo(0, 100000);
   });
 
   const clearCart = createElement(
@@ -287,97 +337,38 @@ if (localCart && localCart.length > 0) {
     containerCart
   );
 
-  const emptyClear = createElement("div", ["col-5"], [{}], "", clearCart);
+  const emptyClear = createElement(
+    "div",
+    ["col-sm-5", "col-3"],
+    [{}],
+    "",
+    clearCart
+  );
 
   const buttonClearCart = createElement(
     "button",
-    ["btn", "btn-outline-dark", "orinoco-font", "bold", "btn-clear", "col-2"],
+    [
+      "btn",
+      "btn-outline-dark",
+      "orinoco-font",
+      "bold",
+      "btn-clear",
+      "col-sm-2",
+      "col-6"
+    ],
     [{}],
     "VIDER LE PANIER",
     clearCart
   );
 
   buttonClearCart.addEventListener("click", () => {
-    let localCart = [];
-    localStorage.setItem("cart", JSON.stringify(localCart));
+    emptyCart();
     containerCart.removeChild(cart);
     containerCart.removeChild(containerTotalPrice);
     containerCart.removeChild(clearCart);
-    articleNumberText = 0;
-    articleNumber.innerText = articleNumberText;
-    form.setAttribute("style", "display : none");
-
-    const body = document.getElementById("container-cart");
-
-    const emptyCart = createElement(
-      "p",
-      ["col-12", "orinoco-font", "bold", "text-center", "empty-cart"],
-      [{}],
-      "votre panier est vide",
-      body
-    );
-
-    const linkToHome = createElement(
-      "a",
-      ["link-to-home"],
-      [{ href: "../../index.html" }],
-      "",
-      containerCart
-    );
-
-    const containerButtonToHome = createElement(
-      "div",
-      ["container-button-home"],
-      [{}],
-      "",
-      linkToHome
-    );
-
-    const buttonToHome = createElement(
-      "button",
-      ["btn", "btn-outline-dark", "orinoco-font", "bold", "center-text"],
-      [{}],
-      "acceuil",
-      containerButtonToHome
-    );
   });
 } else {
-  const body = document.getElementById("container-cart");
-
-  const emptyCart = createElement(
-    "p",
-    ["col-12", "orinoco-font", "bold", "text-center", "empty-cart"],
-    [{}],
-    "votre panier est vide",
-    body
-  );
-
-  const linkToHome = createElement(
-    "a",
-    ["link-to-home"],
-    [{ href: "../../index.html" }],
-    "",
-    containerCart
-  );
-
-  const containerButtonToHome = createElement(
-    "div",
-    ["container-button-home"],
-    [{}],
-    "",
-    linkToHome
-  );
-
-  const buttonToHome = createElement(
-    "button",
-    ["btn", "btn-outline-dark", "orinoco-font", "bold", "center-text"],
-    [{}],
-    "acceuil",
-    containerButtonToHome
-  );
-
-  articleNumberText = 0;
-  articleNumber.innerText = articleNumberText;
+  emptyCart();
 }
 
 //input onchange
@@ -526,12 +517,12 @@ buttonSubmit.addEventListener("click", () => {
         localStorage.removeItem("cart");
       })
       .catch(function (error) {
-        console.log("erreur serveur");
         errorCatchForm.innerText =
           "veuillez nous excuser, le serveur ne repond pas";
+        window.scrollTo(0, 100000);
       });
   } else {
-    console.log("valid false");
     errorCatchForm.innerText = "veuillez remplir tout les champs du formulaire";
+    window.scrollTo(0, 100000);
   }
 });

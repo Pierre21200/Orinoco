@@ -1,9 +1,5 @@
-.body-home {
+body {
   padding-bottom: 75px;
-}
-
-#body-cart {
-  padding-bottom: 100px;
 }
 
 .row {
@@ -27,24 +23,19 @@ header {
 .i-cart {
   position: absolute;
   right: 30px;
-  top: 30px;
+  top: 33px;
 }
 
 .i-home {
   position: absolute;
   left: 30px;
-  top: 30px;
+  top: 33px;
 }
 
 .cart-number {
   position: absolute;
   right: 20px;
   top: 15px;
-}
-
-.title {
-  justify-content: center;
-  text-align: center;
 }
 
 @font-face /* permet d'utiliser une police personnalisée, avec notemment fontsquirrel.com. */ {
@@ -62,22 +53,32 @@ header {
   font-family: "BH";
 }
 
+/* pageProduct */
 .product-list {
   height: 80%;
 }
 
-select {
-  margin: 10px;
+/* teddy's name */
+h2 {
+  text-transform: lowercase;
 }
+
+select {
+  margin: 20px;
+}
+
+/* panier */
 .header-cart {
   border-bottom: black dashed 3px;
   padding-bottom: 15px;
 }
+
 .container-cart {
   padding-top: 30px;
 }
+
 .cart {
-  padding-top: 50px;
+  padding-top: 30px;
 }
 
 .empty-cart {
@@ -85,8 +86,16 @@ select {
   font-size: 30px;
 }
 
-h2 {
-  text-transform: lowercase;
+.img-empty {
+  display: none;
+}
+
+.span {
+  display: none;
+}
+
+.description-empty {
+  display: none;
 }
 
 h3 {
@@ -172,4 +181,66 @@ footer {
   width: 100%;
   padding: 20px;
   background-color: rgb(242, 232, 240);
+}
+
+@media screen and (max-width: 767px) {
+  h1 {
+    font-size: 30px;
+  }
+  .i-cart {
+    top: 30px;
+  }
+  .i-home {
+    top: 30px;
+  }
+  .fa-2x {
+    font-size: 1.5em;
+  }
+  .container-img {
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
+  h2 {
+    text-align: center;
+  }
+  .product-list {
+    text-align: center;
+  }
+  .list-product {
+    margin-bottom: 100px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  /* panier */
+  .header-cart {
+    display: none;
+  }
+  .img-empty {
+    display: inline;
+  }
+  .description-empty {
+    display: inline;
+  }
+  .container-cart {
+    padding-top: 0px;
+  }
+  .cart {
+    padding-top: 20px;
+    padding-bottom: 30px;
+    border-bottom: black dashed 3px;
+  }
+  .container-img {
+    padding-bottom: 20px;
+  }
+  .container-total-price {
+    padding-bottom: 20px;
+  }
+  .container-sub {
+    padding-top: 20px;
+  }
+  .span {
+    display: inline;
+    padding: 15px;
+  }
 }

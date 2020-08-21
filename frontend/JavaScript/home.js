@@ -46,7 +46,7 @@ const getTeddies = () => {
         // Créer la div principale de l'élément qui contiendra tous les sous elements
         const card = createElement(
           "div",
-          ["row", "align-items-center", "cart"],
+          ["row", "align-items-center", "card"],
           [{ id: teddy._id }],
           "",
           products
@@ -64,7 +64,7 @@ const getTeddies = () => {
         // Div container de l'image
         const containerImage = createElement(
           "div",
-          ["col-6"],
+          ["col-md-6", "col-12", "container-img"],
           [{}],
           "",
           cardBody
@@ -85,7 +85,7 @@ const getTeddies = () => {
         // Div des détails
         const containerDetails = createElement(
           "div",
-          ["col-6", "text-center"],
+          ["col-md-6", "col-12", "text-center"],
           [{}],
           "",
           cardBody
@@ -94,7 +94,7 @@ const getTeddies = () => {
         // Le nom
         const nameProduct = createElement(
           "h2",
-          ["cart-title", "text-center", "orinoco-font"],
+          ["card-title", "text-center", "orinoco-font"],
           [{}],
           teddy.name,
           containerDetails

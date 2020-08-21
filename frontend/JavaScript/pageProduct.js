@@ -55,7 +55,7 @@ const getOneTeddy = () => {
 
       const imgProduct = createElement(
         "img",
-        ["col-5"],
+        ["col-md-5", "col-12", "container-img"],
         [
           { src: teddy.imageUrl },
           { alt: "Photo de l'ours en Peluche " + teddy.name }
@@ -66,7 +66,7 @@ const getOneTeddy = () => {
 
       const listProduct = createElement(
         "div",
-        ["col-6"],
+        ["col-md-6", "col-12", "list-product"],
         [{}],
         "",
         containerProduct
@@ -98,7 +98,7 @@ const getOneTeddy = () => {
 
       const labelProduct = createElement(
         "label",
-        [],
+        ["orinoco-font", "bold"],
         [{}],
         "choix de la couleur :",
         listProduct
