@@ -402,10 +402,13 @@ const specialCharacter = /^[!@#$%^&*(),.'-_§?":;{}|<>]+$/;
 const doNotContainSpecialCharacter = value =>
   !value.match(specialCharacter) ? true : false;
 
+const regexGlobal = /^[a-zA-Z- ]+$/u;
+const isGlobal = value => (!value.match(regexGlobal) ? true : false);
+
 const regexMail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const isValidEmail = value => (!value.match(regexMail) ? true : false);
 
-const regexAddress = /([0-9]*) ?([a-zA-Z,\. ]*) ?([0-9]{5}) ?([a-zA-Z]*)/;
+const regexAddress = /^[0-9]{1,5}( [-a-zA-Zàâäéèêëïîôöùûüç ]+)+$/;
 const isValidAddress = value => (!value.match(regexAddress) ? true : false);
 
 const regexCity = /^[[:alpha:]]([-' ]?[[:alpha:]])*$/;
@@ -418,6 +421,7 @@ const isValidName = value =>
 
 firstName.addEventListener("keyup", () => {
   if (isValidName(firstName.value)) {
+    // on veut une regex qui n'accepte que les lettres, et seulement les caractères spéciaux ' -
     errorFirstName.innerText = "";
     errors.firstName = true;
   } else {
@@ -429,6 +433,7 @@ firstName.addEventListener("keyup", () => {
 
 lastName.addEventListener("keyup", () => {
   if (isValidName(lastName.value)) {
+    // même regex que pour prénom
     errorLastName.innerText = "";
     errors.lastName = true;
   } else {
@@ -440,6 +445,7 @@ lastName.addEventListener("keyup", () => {
 
 address.addEventListener("keyup", () => {
   if (isValidAddress(address.value) && isNotEmpty(address.value)) {
+    // on veut une regex qui accepte d'abord un chiffre, puis des mots
     errorAddress.innerText = "";
     errors.address = true;
   } else {
@@ -451,6 +457,7 @@ address.addEventListener("keyup", () => {
 
 city.addEventListener("keyup", () => {
   if (isValidName(city.value) && isValidCity(city.value)) {
+    // même regex que nom et prénom
     errorCity.innerText = "";
     errors.city = true;
   } else {
@@ -461,11 +468,12 @@ city.addEventListener("keyup", () => {
 });
 
 email.addEventListener("keyup", () => {
-  if (isNotEmpty(email.value)) {
+  // on veut une regex qui prend une chaine de caractère alpha numérique sans caractère spécial, puis un arobas, puis une chaine de caractère alpha sans chiffre ni caractère spéciale, puis un point, puis une chaine de caractère
+  if (isValidEmail(email.value) && isNotEmpty(email.value)) {
     errorEmail.innerText = "";
     errors.email = true;
   } else {
-    errorEmail.innerText = "CETTE ADRESSE MAIL N4EST PAS VALIDE";
+    errorEmail.innerText = "CETTE ADRESSE MAIL N'EST PAS VALIDE";
     email.focus();
     errors.email = false;
   }
