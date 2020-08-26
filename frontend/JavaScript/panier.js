@@ -1,10 +1,12 @@
-// variables affichant le nombre d'article
+// Page panier
+
+// Variables
 let articleNumber = document.getElementById("article-number");
 let articleNumberText = 0; // revoir ça, mieux si c'est le bon direct plutot que de le mettre a jour plus bas
 let localCart = JSON.parse(localStorage.getItem("cart"));
 let totalPrice = 0;
 
-//fonction
+// Fonction qui facilite la création des éléments de notre page
 const createElement = (element, classes, attributes, text, parent) => {
   const el = document.createElement(element);
   classes.forEach(clas => {
@@ -20,6 +22,7 @@ const createElement = (element, classes, attributes, text, parent) => {
   return el;
 };
 
+// fonction pour le panier vide que l'on utilise dans trois cas différents
 const emptyCart = () => {
   localCart = [];
   localStorage.setItem("cart", JSON.stringify(localCart));
@@ -61,7 +64,7 @@ const emptyCart = () => {
   );
 };
 
-// Header Artcile Number
+// Structure conditionnelle qui permet d'incrémententer la quantité d'artcicle affiché dans le header
 if (localCart && localCart.length > 0) {
   localCart.forEach(element => {
     articleNumberText += element.quantity;
@@ -71,10 +74,8 @@ if (localCart && localCart.length > 0) {
   articleNumber.innerText = 0;
 }
 
-// on sélectionne la div dans laquelle on va placer nos informations
+// On récupère dans notre page HTML, l'élément dans lequel on va placer nos éléments dynamique
 const containerCart = document.querySelector("#container-cart");
-containerCart.classList.add("container-cart", "align-items-center");
-containerCart.setAttribute("style", "padding-bottom : 50px");
 
 // Ligne titre du tableau
 const headerCart = createElement(
@@ -125,14 +126,16 @@ const headerPrice = createElement(
   headerCart
 );
 
+// on utilise une structure conditionnelle, qui vérifie si le panier existe et contient au moins un article
 if (localCart && localCart.length > 0) {
-  // et pour chacun de ses éléments, on construit notre panier :
   localCart.forEach(teddy => {
+    // on met d'abord a jour le prix en fonction de quanité de teddy
     let teddyPriceQuantity = teddy.price * teddy.quantity;
 
-    // incrémentation du prix
+    // incrémentation du prix total
     totalPrice += teddyPriceQuantity;
 
+    // et pour chacun de ses éléments, on construit notre panier :
     const cart = createElement(
       "div",
       ["row", "align-items-center", "cart"],
@@ -141,6 +144,7 @@ if (localCart && localCart.length > 0) {
       containerCart
     );
 
+    // element qui n'apparait que dans les media queries, caché avec un display : none
     const ImgEmpty = createElement(
       "div",
       ["col-2", "img-empty"],
@@ -165,6 +169,7 @@ if (localCart && localCart.length > 0) {
       cart
     );
 
+    // element qui n'apparait que dans les media queries, caché avec un display : none
     const spanDescription = createElement(
       "span",
       ["orinoco-font", "bold", "span", "col-12", "text-center"],
@@ -173,7 +178,8 @@ if (localCart && localCart.length > 0) {
       cart
     );
 
-    const Emptydescription = createElement(
+    // element qui n'apparait que dans les media queries, caché avec un display : none
+    const emptyDescription = createElement(
       "div",
       ["description-empty", "col-3"],
       [{}],
@@ -197,6 +203,7 @@ if (localCart && localCart.length > 0) {
       cart
     );
 
+    // element qui n'apparait que dans les media queries, caché avec un display : none
     const spanQuantity = createElement(
       "span",
       ["orinoco-font", "bold", "span"],
@@ -213,6 +220,7 @@ if (localCart && localCart.length > 0) {
       containerQuantity
     );
 
+    // element qui n'apparait que dans les media queries, caché avec un display : none
     const spanPrice = createElement(
       "span",
       ["orinoco-font", "bold", "span", "col-12", "text-center"],
@@ -245,7 +253,7 @@ if (localCart && localCart.length > 0) {
       containerButtonSubToCart
     );
 
-    // bouton subToCart
+    // bouton subToCart, retirer du panier
     buttonSubToCart.addEventListener("click", () => {
       articleNumberText -= 1;
       articleNumber.innerText = articleNumberText;
@@ -258,7 +266,6 @@ if (localCart && localCart.length > 0) {
         totalPrice -= teddy.price;
         totalPriceText.innerText = `${totalPrice} €`;
       } else {
-        console.log("pk");
         localCart = localCart.filter(element => element._id != teddy._id);
         localStorage.setItem("cart", JSON.stringify(localCart));
         containerCart.removeChild(cart);
@@ -267,7 +274,6 @@ if (localCart && localCart.length > 0) {
       }
 
       if (localCart.length === 0) {
-        console.log("pk");
         emptyCart();
         containerCart.removeChild(containerTotalPrice);
         containerCart.removeChild(clearCart);
@@ -402,26 +408,19 @@ const specialCharacter = /^[!@#$%^&*(),.'-_§?":;{}|<>]+$/;
 const doNotContainSpecialCharacter = value =>
   !value.match(specialCharacter) ? true : false;
 
-const regexGlobal = /^[a-zA-Z- ]+$/u;
-const isGlobal = value => (!value.match(regexGlobal) ? true : false);
-
-const regexMail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const isValidEmail = value => (!value.match(regexMail) ? true : false);
-
-const regexAddress = /^[0-9]{1,5}( [-a-zA-Zàâäéèêëïîôöùûüç ]+)+$/;
-const isValidAddress = value => (!value.match(regexAddress) ? true : false);
-
-const regexCity = /^[[:alpha:]]([-' ]?[[:alpha:]])*$/;
-const isValidCity = value => (!value.match(regexCity) ? true : false);
-
 const isValidName = value =>
   isNotEmpty(value) &&
   doNotContainNumber(value) &&
   doNotContainSpecialCharacter(value);
 
+const regexMail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const isValidEmail = value => (regexMail.test(value) ? true : false);
+
+const regexAddress = /^[0-9]{1,5} ([-a-zA-Zàâäéèêëïîôöùûüç ])+/;
+const isValidAddress = value => (regexAddress.test(value) ? true : false);
+
 firstName.addEventListener("keyup", () => {
   if (isValidName(firstName.value)) {
-    // on veut une regex qui n'accepte que les lettres, et seulement les caractères spéciaux ' -
     errorFirstName.innerText = "";
     errors.firstName = true;
   } else {
@@ -433,7 +432,6 @@ firstName.addEventListener("keyup", () => {
 
 lastName.addEventListener("keyup", () => {
   if (isValidName(lastName.value)) {
-    // même regex que pour prénom
     errorLastName.innerText = "";
     errors.lastName = true;
   } else {
@@ -444,8 +442,7 @@ lastName.addEventListener("keyup", () => {
 });
 
 address.addEventListener("keyup", () => {
-  if (isValidAddress(address.value) && isNotEmpty(address.value)) {
-    // on veut une regex qui accepte d'abord un chiffre, puis des mots
+  if (isValidAddress(address.value)) {
     errorAddress.innerText = "";
     errors.address = true;
   } else {
@@ -456,8 +453,7 @@ address.addEventListener("keyup", () => {
 });
 
 city.addEventListener("keyup", () => {
-  if (isValidName(city.value) && isValidCity(city.value)) {
-    // même regex que nom et prénom
+  if (isValidName(city.value)) {
     errorCity.innerText = "";
     errors.city = true;
   } else {
@@ -468,8 +464,7 @@ city.addEventListener("keyup", () => {
 });
 
 email.addEventListener("keyup", () => {
-  // on veut une regex qui prend une chaine de caractère alpha numérique sans caractère spécial, puis un arobas, puis une chaine de caractère alpha sans chiffre ni caractère spéciale, puis un point, puis une chaine de caractère
-  if (isValidEmail(email.value) && isNotEmpty(email.value)) {
+  if (isValidEmail(email.value)) {
     errorEmail.innerText = "";
     errors.email = true;
   } else {
@@ -520,7 +515,6 @@ buttonSubmit.addEventListener("click", () => {
       })
       .then(function (data) {
         localStorage.setItem("data", JSON.stringify(data));
-        console.log("serveur ok, post ok");
         window.location = `checkout.html`;
         localStorage.removeItem("cart");
       })

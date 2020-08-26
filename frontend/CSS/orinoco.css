@@ -26,12 +26,6 @@ header {
   top: 33px;
 }
 
-.i-home {
-  position: absolute;
-  left: 30px;
-  top: 33px;
-}
-
 .cart-number {
   position: absolute;
   right: 20px;
@@ -73,8 +67,9 @@ select {
   padding-bottom: 15px;
 }
 
-.container-cart {
+#container-cart {
   padding-top: 30px;
+  padding-bottom: 50px;
 }
 
 .cart {

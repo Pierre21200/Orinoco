@@ -1,11 +1,11 @@
-// page produit
+// Page produit
 
-// variables
+// Variables
 let articleNumber = document.getElementById("article-number");
 let articleNumberText = 0;
 let localCart = JSON.parse(localStorage.getItem("cart"));
 
-// fonctions
+// Fonction qui facilite la création des éléments de notre page
 const createElement = (element, classes, attributes, text, parent) => {
   const el = document.createElement(element);
   classes.forEach(clas => {
@@ -21,7 +21,7 @@ const createElement = (element, classes, attributes, text, parent) => {
   return el;
 };
 
-//affichage quantité dans headers
+// Structure conditionnelle qui permet d'incrémententer la quantité d'artcicle affiché dans le header
 if (localCart && localCart.length > 0) {
   localCart.forEach(element => {
     articleNumberText += element.quantity;
@@ -31,11 +31,13 @@ if (localCart && localCart.length > 0) {
   articleNumber.innerText = 0;
 }
 
+// On récupère dans notre page HTML, l'élément dans lequel on va placer nos éléments dynamique
+const pageProduct = document.querySelector("#pageProduct");
+
 // on récupère l'URL de notre page actuelle, avec l'id qui nous intéresse, puis on ajoute cette id à l'url de l'API pour pouvoir travailler avec le teddy selectionné
 const params = new URLSearchParams(window.location.search);
 const id = params.get("teddy");
 const url = "http://localhost:3000/api/teddies/" + id;
-const pageProduct = document.querySelector("#pageProduct");
 
 // on initie la fonction qui va nous permettre, avec la promesse renvoyée :
 const getOneTeddy = () => {

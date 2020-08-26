@@ -5,8 +5,8 @@ let articleNumber = document.getElementById("article-number");
 let articleNumberText = 0;
 let localCart = JSON.parse(localStorage.getItem("cart"));
 
-// Fonctions
-const createElement = (element, classes, attributes, text, parent) => {
+// Fonction qui facilite la création des éléments de notre page
+const createElement = (element, classes, attributes = [], text, parent) => {
   const el = document.createElement(element);
   classes.forEach(clas => {
     el.classList.add(clas);
@@ -21,7 +21,7 @@ const createElement = (element, classes, attributes, text, parent) => {
   return el;
 };
 
-// Augmenter la quantité de notre article s'il est déjà présent dans le panier
+// Structure conditionnelle qui permet d'incrémententer la quantité d'artcicle affiché dans le header
 if (localCart && localCart.length > 0) {
   localCart.forEach(element => {
     articleNumberText += element.quantity;
@@ -31,6 +31,7 @@ if (localCart && localCart.length > 0) {
   articleNumber.innerText = 0;
 }
 
+// On récupère dans notre page HTML, l'élément dans lequel on va placer nos éléments dynamique
 const products = document.querySelector("#product-item");
 
 // D'appeller la function getteddies afin de l'executer
@@ -40,7 +41,7 @@ const getTeddies = () => {
     .then(teddies => {
       // On itere sur le tableau de teddies, pour chaque élément du tableau on va :
       teddies.forEach(teddy => {
-        // On divise le prix des teddies par 100
+        // Diviser le prix des teddies par 100
         teddy.price /= 100;
 
         // Créer la div principale de l'élément qui contiendra tous les sous elements
@@ -48,7 +49,7 @@ const getTeddies = () => {
           "div",
           ["row", "align-items-center", "card"],
           [{ id: teddy._id }],
-          "",
+          null,
           products
         );
 
@@ -56,8 +57,8 @@ const getTeddies = () => {
         const cardBody = createElement(
           "div",
           ["card-body", "align-items-center", "row"],
-          [{}],
-          "",
+          [null],
+          null,
           card
         );
 
@@ -65,8 +66,8 @@ const getTeddies = () => {
         const containerImage = createElement(
           "div",
           ["col-md-6", "col-12", "container-img"],
-          [{}],
-          "",
+          [null],
+          null,
           cardBody
         );
 
@@ -78,7 +79,7 @@ const getTeddies = () => {
             { src: teddy.imageUrl },
             { alt: `Photo de l'ours en peluche ${teddy.name}` }
           ],
-          "",
+          null,
           containerImage
         );
 
@@ -86,8 +87,8 @@ const getTeddies = () => {
         const containerDetails = createElement(
           "div",
           ["col-md-6", "col-12", "text-center"],
-          [{}],
-          "",
+          [null],
+          null,
           cardBody
         );
 
@@ -95,7 +96,7 @@ const getTeddies = () => {
         const nameProduct = createElement(
           "h2",
           ["card-title", "text-center", "orinoco-font"],
-          [{}],
+          [null],
           teddy.name,
           containerDetails
         );
@@ -104,7 +105,7 @@ const getTeddies = () => {
         const priceProduct = createElement(
           "h5",
           ["card-text", "text-center", "orinoco-font"],
-          [{}],
+          [null],
           `${teddy.price} €`,
           containerDetails
         );
@@ -114,7 +115,7 @@ const getTeddies = () => {
           "a",
           [],
           [{ href: `frontend/HTML/page-produit.html?teddy=${teddy._id}` }],
-          "",
+          null,
           containerDetails
         );
 
@@ -145,23 +146,23 @@ const getTeddies = () => {
           "div",
           ["modal", "fade"],
           [{ id: "addToCart" }],
-          "",
+          null,
           containerDetails
         );
 
         const modalDialog = createElement(
           "div",
           ["modal-dialog", "modal-sm"],
-          [{}],
-          "",
+          [null],
+          null,
           modal
         );
 
         const modalContent = createElement(
           "div",
           ["modal-content"],
-          [{}],
-          "",
+          [null],
+          null,
           modalDialog
         );
 
@@ -176,8 +177,8 @@ const getTeddies = () => {
         const modalFooter = createElement(
           "div",
           ["modal-footer"],
-          [{}],
-          "",
+          [null],
+          null,
           modalContent
         );
 
@@ -193,14 +194,14 @@ const getTeddies = () => {
           "a",
           [],
           [{ href: "frontend/HTML/panier.html" }],
-          "",
+          null,
           modalFooter
         );
 
         const buttonFooterCart = createElement(
           "button",
           ["button-footer-cart", "btn", "btn-outline-dark"],
-          [{}],
+          [null],
           "Panier",
           linkCart
         );
@@ -234,7 +235,7 @@ const getTeddies = () => {
         "p",
         ["orinoco-font", "text-center", "bold"],
         [{ style: "font-size : 100px" }, { style: "margin : 50px" }],
-        "",
+        null,
         products
       );
       errorCatch.innerText =
