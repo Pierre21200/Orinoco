@@ -421,10 +421,12 @@ const isValidAddress = value => (regexAddress.test(value) ? true : false);
 
 firstName.addEventListener("keyup", () => {
   if (isValidName(firstName.value)) {
-    errorFirstName.innerText = "";
+    errorFirstName.innerText = "CE PRENOM EST VALIDE";
+    errorFirstName.setAttribute("style", "color : green");
     errors.firstName = true;
   } else {
     errorFirstName.innerText = "CE PRENOM N'EST PAS VALIDE";
+    errorFirstName.setAttribute("style", "color : red");
     firstName.focus();
     errors.firstName = false;
   }
@@ -432,10 +434,12 @@ firstName.addEventListener("keyup", () => {
 
 lastName.addEventListener("keyup", () => {
   if (isValidName(lastName.value)) {
-    errorLastName.innerText = "";
+    errorLastName.innerText = "CE NOM EST VALIDE";
+    errorLastName.setAttribute("style", "color : green");
     errors.lastName = true;
   } else {
     errorLastName.innerText = "CE NOM N'EST PAS VALIDE";
+    errorLastName.setAttribute("style", "color : red");
     lastName.focus();
     errors.lastName = false;
   }
@@ -443,10 +447,12 @@ lastName.addEventListener("keyup", () => {
 
 address.addEventListener("keyup", () => {
   if (isValidAddress(address.value)) {
-    errorAddress.innerText = "";
+    errorAddress.innerText = "CETTE ADRESSE EST VALIDE";
+    errorAddress.setAttribute("style", "color : green");
     errors.address = true;
   } else {
     errorAddress.innerText = "CETTE ADRESSE N'EST PAS VALIDE";
+    errorAddress.setAttribute("style", "color : red");
     address.focus();
     errors.address = false;
   }
@@ -454,10 +460,12 @@ address.addEventListener("keyup", () => {
 
 city.addEventListener("keyup", () => {
   if (isValidName(city.value)) {
-    errorCity.innerText = "";
+    errorCity.innerText = "CETTE VILLE EST VALIDE";
+    errorCity.setAttribute("style", "color : green");
     errors.city = true;
   } else {
     errorCity.innerText = "CETTE VILLE N'EST PAS VALIDE";
+    errorCity.setAttribute("style", "color : red");
     city.focus();
     errors.city = false;
   }
@@ -465,10 +473,12 @@ city.addEventListener("keyup", () => {
 
 email.addEventListener("keyup", () => {
   if (isValidEmail(email.value)) {
-    errorEmail.innerText = "";
+    errorEmail.innerText = "CETTE ADRESSE MAIL EST VALIDE";
+    errorEmail.setAttribute("style", "color : green");
     errors.email = true;
   } else {
     errorEmail.innerText = "CETTE ADRESSE MAIL N'EST PAS VALIDE";
+    errorEmail.setAttribute("style", "color : red");
     email.focus();
     errors.email = false;
   }

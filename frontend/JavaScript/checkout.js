@@ -1,5 +1,8 @@
 // Variables
 let localCart = JSON.parse(localStorage.getItem("cart"));
+let articleNumber = document.getElementById("article-number");
+let articleNumberText = 0;
+articleNumber.innerText = articleNumberText;
 
 // on récupère infos du storage
 const data = JSON.parse(localStorage.getItem("data"));
