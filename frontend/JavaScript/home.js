@@ -208,18 +208,23 @@ const getTeddies = () => {
 
         // lorsque l'utilisateur clique sur le bouton
         buttonAddToCart.addEventListener("click", () => {
+          let localCart = JSON.parse(localStorage.getItem("cart"));
           if (localCart && localCart.length > 0) {
             const found = localCart.find(element => element._id == teddy._id);
 
             if (found) {
+              console.log("local pas vide ET meme teddy");
               found.quantity += 1;
               localStorage.setItem("cart", JSON.stringify(localCart));
             } else {
+              console.log("localcart pas vide et Teddy différent");
               teddy = { ...teddy, quantity: 1 };
+              console.log(localCart);
               localCart = [...localCart, teddy];
               localStorage.setItem("cart", JSON.stringify(localCart));
             }
           } else {
+            console.log("localCart vide");
             teddy = { ...teddy, quantity: 1 };
             let localCart = [];
             localCart = [...localCart, teddy];

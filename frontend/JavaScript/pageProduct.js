@@ -212,6 +212,8 @@ const getOneTeddy = () => {
 
       // on execute la fonction lorsque l'utilisateur clique sur le bouton
       buttonAddToCart.addEventListener("click", () => {
+        let localCart = JSON.parse(localStorage.getItem("cart"));
+
         if (localCart && localCart.length > 0) {
           const found = localCart.find(element => element._id == teddy._id);
 

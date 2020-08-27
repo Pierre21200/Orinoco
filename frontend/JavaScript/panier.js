@@ -29,9 +29,10 @@ const emptyCart = () => {
   articleNumberText = 0;
   articleNumber.innerText = articleNumberText;
   form.setAttribute("style", "display : none");
-  const body = document.getElementById("container-cart");
+  const body = document.querySelector("body");
+  body.removeChild(containerCart);
 
-  const emptyCart = createElement(
+  const emptyCartText = createElement(
     "p",
     ["col-12", "orinoco-font", "bold", "text-center", "empty-cart"],
     [{}],
@@ -44,7 +45,7 @@ const emptyCart = () => {
     ["link-to-home"],
     [{ href: "../../index.html" }],
     "",
-    containerCart
+    body
   );
 
   const containerButtonToHome = createElement(
@@ -139,7 +140,7 @@ if (localCart && localCart.length > 0) {
     const cart = createElement(
       "div",
       ["row", "align-items-center", "cart"],
-      [{ id: "cart" }],
+      [null],
       "",
       containerCart
     );
@@ -275,8 +276,6 @@ if (localCart && localCart.length > 0) {
 
       if (localCart.length === 0) {
         emptyCart();
-        containerCart.removeChild(containerTotalPrice);
-        containerCart.removeChild(clearCart);
       }
     });
   });
@@ -369,10 +368,6 @@ if (localCart && localCart.length > 0) {
 
   buttonClearCart.addEventListener("click", () => {
     emptyCart();
-    const cart = document.getElementById("cart");
-    containerCart.removeChild(cart);
-    containerCart.removeChild(containerTotalPrice);
-    containerCart.removeChild(clearCart);
   });
 } else {
   emptyCart();
