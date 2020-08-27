@@ -1,9 +1,20 @@
 // Page d'acceuil
 
 // Variables
+let localCart = JSON.parse(localStorage.getItem("cart"));
 let articleNumber = document.getElementById("article-number");
 let articleNumberText = 0;
-let localCart = JSON.parse(localStorage.getItem("cart"));
+
+// Structure conditionnelle qui permet d'incrémententer la quantité d'article affiché dans le header
+if (localCart && localCart.length > 0) {
+  localCart.forEach(element => {
+    articleNumberText += element.quantity;
+    articleNumber.innerText = articleNumberText;
+  });
+} else {
+  articleNumber.innerText = 0;
+  articleNumber.innerText = articleNumberText;
+}
 
 // Fonction qui facilite la création des éléments de notre page
 const createElement = (element, classes, attributes = [], text, parent) => {
@@ -20,16 +31,6 @@ const createElement = (element, classes, attributes = [], text, parent) => {
   parent.appendChild(el);
   return el;
 };
-
-// Structure conditionnelle qui permet d'incrémententer la quantité d'artcicle affiché dans le header
-if (localCart && localCart.length > 0) {
-  localCart.forEach(element => {
-    articleNumberText += element.quantity;
-    articleNumber.innerText = articleNumberText;
-  });
-} else {
-  articleNumber.innerText = 0;
-}
 
 // On récupère dans notre page HTML, l'élément dans lequel on va placer nos éléments dynamique
 const products = document.querySelector("#product-item");
@@ -235,6 +236,7 @@ const getTeddies = () => {
         });
       });
     })
+
     .catch(function (error) {
       const errorCatch = createElement(
         "p",

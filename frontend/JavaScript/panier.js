@@ -2,9 +2,19 @@
 
 // Variables
 let articleNumber = document.getElementById("article-number");
-let articleNumberText = 0; // revoir ça, mieux si c'est le bon direct plutot que de le mettre a jour plus bas
+let articleNumberText = 0;
 let localCart = JSON.parse(localStorage.getItem("cart"));
 let totalPrice = 0;
+
+// Structure conditionnelle qui permet d'incrémententer la quantité d'artcicle affiché dans le header
+if (localCart && localCart.length > 0) {
+  localCart.forEach(element => {
+    articleNumberText += element.quantity;
+    articleNumber.innerText = articleNumberText;
+  });
+} else {
+  articleNumber.innerText = 0;
+}
 
 // Fonction qui facilite la création des éléments de notre page
 const createElement = (element, classes, attributes, text, parent) => {
@@ -64,16 +74,6 @@ const emptyCart = () => {
     containerButtonToHome
   );
 };
-
-// Structure conditionnelle qui permet d'incrémententer la quantité d'artcicle affiché dans le header
-if (localCart && localCart.length > 0) {
-  localCart.forEach(element => {
-    articleNumberText += element.quantity;
-    articleNumber.innerText = articleNumberText;
-  });
-} else {
-  articleNumber.innerText = 0;
-}
 
 // On récupère dans notre page HTML, l'élément dans lequel on va placer nos éléments dynamique
 const containerCart = document.querySelector("#container-cart");
