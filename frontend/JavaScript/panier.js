@@ -369,6 +369,7 @@ if (localCart && localCart.length > 0) {
 
   buttonClearCart.addEventListener("click", () => {
     emptyCart();
+    const cart = document.getElementById("cart");
     containerCart.removeChild(cart);
     containerCart.removeChild(containerTotalPrice);
     containerCart.removeChild(clearCart);
